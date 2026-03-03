@@ -447,6 +447,18 @@ body {
   }
 }
 
+@keyframes glowPulseMobile {
+  0% {
+    text-shadow: 0 0 6px rgba(182, 243, 255, 0.4), 0 0 13px rgba(182, 243, 255, 0.16);
+  }
+  50% {
+    text-shadow: 0 0 11px rgba(182, 243, 255, 0.58), 0 0 22px rgba(182, 243, 255, 0.27);
+  }
+  100% {
+    text-shadow: 0 0 6px rgba(182, 243, 255, 0.4), 0 0 13px rgba(182, 243, 255, 0.16);
+  }
+}
+
 .partner {
   padding: clamp(3.5rem, 9vw, 6rem) 0;
   display: flex;
@@ -555,6 +567,9 @@ body {
     align-self: center;
     text-align: center;
     padding-inline: 0;
+    white-space: nowrap;
+    font-size: clamp(1rem, 5.2vw, 1.55rem);
+    letter-spacing: 0.015em;
   }
 
   .nav-toggle {
@@ -644,6 +659,12 @@ body {
     font-size: clamp(3.8rem, 11vw, 6.6rem);
   }
 
+  .hero h1,
+  .glow-title {
+    text-shadow: 0 0 8px rgba(182, 243, 255, 0.5), 0 0 18px rgba(182, 243, 255, 0.22);
+    animation-name: glowPulseMobile;
+  }
+
   .about-copy {
     font-size: clamp(0.95rem, 2.6vw, 1.1rem);
   }
@@ -680,6 +701,10 @@ body.nav-open {
 
   .hero h1 {
     font-size: clamp(3rem, 15vw, 5.2rem);
+  }
+
+  .brand {
+    font-size: clamp(0.92rem, 5vw, 1.28rem);
   }
 
   .mobile-nav .nav-item {

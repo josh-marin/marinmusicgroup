@@ -11,6 +11,19 @@
   <link rel="stylesheet" href="style.css">
   <script defer src="script.js"></script>
   <style>
+    .partner-page {
+      overflow-x: clip;
+      overscroll-behavior-x: none;
+      touch-action: pan-y;
+    }
+
+    .partner-page main,
+    .partner-contact,
+    .partner-contact-inner {
+      overflow-x: clip;
+      max-width: 100%;
+    }
+
     .partner-contact {
       background: #0c0c0d;
       padding: clamp(2.5rem, 6vw, 5rem) 0 clamp(3rem, 8vw, 6rem);
@@ -271,7 +284,7 @@
     }
   </style>
 </head>
-<body>
+<body class="partner-page">
   <header class="site-header">
     <div class="shell nav-row">
       <a class="brand" href="index.html#hero">MARIN MUSIC GROUP</a>
