@@ -27,7 +27,7 @@
     }
 
     .about-hero {
-      padding: clamp(3.4rem, 6.8vw, 5.6rem) 0 clamp(2.6rem, 5vw, 3.8rem);
+      padding: clamp(2.6rem, 5.6vw, 4.4rem) 0 clamp(2.4rem, 4.8vw, 3.4rem);
       min-height: auto;
       text-align: center;
     }
@@ -59,7 +59,7 @@
     }
 
     .about-lead {
-      margin: clamp(1.4rem, 2.6vw, 1.9rem) auto 0;
+      margin: clamp(1.15rem, 2.3vw, 1.6rem) auto 0;
       max-width: 980px;
       color: #ffffff;
       font-size: clamp(0.98rem, 1.7vw, 1.24rem);
@@ -224,6 +224,7 @@
       cursor: pointer;
       width: 100%;
       appearance: none;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .service-card:hover {
@@ -257,6 +258,7 @@
       position: absolute;
       inset: 0;
       background: rgba(0, 0, 0, 0.6);
+      -webkit-tap-highlight-color: transparent;
     }
 
     .service-modal__dialog {
@@ -281,6 +283,7 @@
       font-size: 1.8rem;
       line-height: 1;
       cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .service-modal__dialog h3 {
@@ -318,6 +321,7 @@
       line-height: 1;
       cursor: pointer;
       transition: transform 180ms ease, background-color 180ms ease, color 180ms ease;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .service-modal__arrow:hover {
@@ -342,8 +346,8 @@
       }
 
       .about-hero {
-        padding-top: clamp(3.1rem, 8vw, 4.2rem);
-        padding-bottom: clamp(2.2rem, 6vw, 3rem);
+        padding-top: clamp(2.4rem, 6.6vw, 3.3rem);
+        padding-bottom: clamp(2rem, 5.4vw, 2.7rem);
       }
 
       .about-hero,
@@ -363,6 +367,18 @@
 
       .about-cta-btn {
         width: min(100% - 0.9rem, 620px);
+      }
+
+      .service-card:focus,
+      .service-card:focus-visible,
+      .service-modal__backdrop:focus,
+      .service-modal__backdrop:focus-visible,
+      .service-modal__close:focus,
+      .service-modal__close:focus-visible,
+      .service-modal__arrow:focus,
+      .service-modal__arrow:focus-visible {
+        outline: none;
+        box-shadow: none;
       }
 
     }
@@ -396,11 +412,11 @@
 
   <main id="hero" class="about-main">
     <section class="about-hero shell reveal">
-      <p class="about-kicker">Founded by Joshua Marin</p>
       <h1>ABOUT</h1>
       <p class="about-lead">
         MARIN Music Group is an independent music growth company built for artists who treat their career like a business.
-        Built from execution — not theory — MMG engineered the systems behind millions of independent streams and listeners into structured, repeatable growth infrastructure.
+        <br><br>
+        Founded by Joshua Marin, MMG was built from execution — not theory — engineering the systems behind millions of independent streams and listeners into structured, repeatable growth infrastructure.
         <br><br>
         <span class="about-lead-emphasis">Today, those systems are deployed for a focused roster of partners through disciplined paid acquisition and capital-backed scaling.</span>
       </p>
@@ -480,6 +496,7 @@
     const serviceModal = document.getElementById("service-modal");
     const serviceTitle = document.getElementById("service-modal-title");
     const serviceCopy = document.getElementById("service-modal-copy");
+    const serviceDialog = serviceModal?.querySelector(".service-modal__dialog");
     const servicePrev = document.getElementById("service-prev");
     const serviceNext = document.getElementById("service-next");
     const serviceTriggers = document.querySelectorAll(".service-trigger");
@@ -516,6 +533,43 @@
       updateServiceModal(serviceOrder[activeServiceIndex]);
     };
 
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+
+    const handleSwipeStart = (event) => {
+      const touch = event.changedTouches?.[0];
+      if (!touch) return;
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+      touchEndX = touch.clientX;
+      touchEndY = touch.clientY;
+    };
+
+    const handleSwipeMove = (event) => {
+      const touch = event.changedTouches?.[0];
+      if (!touch) return;
+      touchEndX = touch.clientX;
+      touchEndY = touch.clientY;
+    };
+
+    const handleSwipeEnd = () => {
+      if (!serviceModal?.classList.contains("is-open")) return;
+      const deltaX = touchEndX - touchStartX;
+      const deltaY = touchEndY - touchStartY;
+      const minSwipeDistance = 42;
+
+      if (Math.abs(deltaX) < minSwipeDistance) return;
+      if (Math.abs(deltaX) <= Math.abs(deltaY) * 1.2) return;
+
+      if (deltaX > 0) {
+        cycleService(-1);
+      } else {
+        cycleService(1);
+      }
+    };
+
     const closeServiceModal = () => {
       if (!serviceModal) return;
       serviceModal.classList.remove("is-open");
@@ -536,6 +590,9 @@
 
     servicePrev?.addEventListener("click", () => cycleService(-1));
     serviceNext?.addEventListener("click", () => cycleService(1));
+    serviceDialog?.addEventListener("touchstart", handleSwipeStart, { passive: true });
+    serviceDialog?.addEventListener("touchmove", handleSwipeMove, { passive: true });
+    serviceDialog?.addEventListener("touchend", handleSwipeEnd, { passive: true });
 
     window.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && serviceModal?.classList.contains("is-open")) {
