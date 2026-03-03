@@ -11,16 +11,23 @@
   <link rel="stylesheet" href="style.css">
   <script defer src="script.js"></script>
   <style>
+    html {
+      overflow-x: hidden;
+    }
+
     .partner-page {
-      overflow-x: clip;
+      overflow-x: hidden;
       overscroll-behavior-x: none;
       touch-action: pan-y;
+      width: 100%;
+      max-width: 100%;
+      position: relative;
     }
 
     .partner-page main,
     .partner-contact,
     .partner-contact-inner {
-      overflow-x: clip;
+      overflow-x: hidden;
       max-width: 100%;
     }
 
@@ -259,6 +266,7 @@
       }
 
       .partner-contact-title {
+        white-space: normal;
         font-size: clamp(1.6rem, 9.2vw, 3.4rem);
         letter-spacing: 0.015em;
       }
