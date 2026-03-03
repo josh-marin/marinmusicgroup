@@ -651,8 +651,13 @@ body {
   }
 
   .hero-content {
-    padding-top: 6.5rem;
-    padding-bottom: 5rem;
+    padding: 0;
+    transform: none;
+    min-height: calc(100svh - 92px);
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 0.9rem;
   }
 
   .hero h1 {
@@ -691,12 +696,12 @@ body.nav-open {
   }
 
   .hero {
-    min-height: 80vh;
+    min-height: calc(100svh - 92px);
   }
 
   .hero-content {
-    padding-top: 7.5rem;
-    padding-bottom: 4.5rem;
+    min-height: calc(100svh - 92px);
+    padding: 0;
   }
 
   .hero h1 {
