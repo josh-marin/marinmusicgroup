@@ -449,13 +449,13 @@ body {
 
 @keyframes glowPulseMobile {
   0% {
-    text-shadow: 0 0 6px rgba(182, 243, 255, 0.4), 0 0 13px rgba(182, 243, 255, 0.16);
+    text-shadow: 0 0 5px rgba(182, 243, 255, 0.36), 0 0 12px rgba(182, 243, 255, 0.14);
   }
   50% {
-    text-shadow: 0 0 11px rgba(182, 243, 255, 0.58), 0 0 22px rgba(182, 243, 255, 0.27);
+    text-shadow: 0 0 10px rgba(182, 243, 255, 0.52), 0 0 20px rgba(182, 243, 255, 0.24);
   }
   100% {
-    text-shadow: 0 0 6px rgba(182, 243, 255, 0.4), 0 0 13px rgba(182, 243, 255, 0.16);
+    text-shadow: 0 0 5px rgba(182, 243, 255, 0.36), 0 0 12px rgba(182, 243, 255, 0.14);
   }
 }
 
@@ -666,7 +666,7 @@ body {
 
   .hero h1,
   .glow-title {
-    text-shadow: 0 0 8px rgba(182, 243, 255, 0.5), 0 0 18px rgba(182, 243, 255, 0.22);
+    text-shadow: 0 0 7px rgba(182, 243, 255, 0.45), 0 0 16px rgba(182, 243, 255, 0.2);
     animation-name: glowPulseMobile;
   }
 
