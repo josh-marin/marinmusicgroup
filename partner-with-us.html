@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partner With Us | Marin Music Group</title>
+  <meta name="description" content="Partner with Marin Music Group">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:ital,wght@0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+  <style>
+    .partner-contact {
+      background: #0c0c0d;
+      padding: clamp(2.5rem, 6vw, 5rem) 0 clamp(3rem, 8vw, 6rem);
+    }
+
+    .partner-contact-inner {
+      width: min(100%, 920px);
+      margin: 0 auto;
+    }
+
+    .partner-contact-title {
+      display: block;
+      width: 100%;
+      margin: 0;
+      text-align: center;
+      white-space: nowrap;
+      font-size: clamp(2.35rem, 8vw, 8.2rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+    }
+
+    .partner-contact-intro {
+      max-width: 850px;
+      margin: 1rem auto 3rem;
+      text-align: center;
+      font-size: clamp(1rem, 1.45vw, 1.25rem);
+      color: #ffffff;
+    }
+
+    .partner-contact-intro-strong {
+      font-weight: 700;
+    }
+
+    .partner-contact-intro-regular {
+      font-weight: 400;
+    }
+
+    .partner-form {
+      width: min(100%, 760px);
+      margin: 0 auto;
+    }
+
+    .section-title {
+      margin: 0 0 0.65rem;
+      font-size: clamp(1.4rem, 2.3vw, 2rem);
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    .section-label {
+      margin: 0 0 0.9rem;
+      text-align: center;
+      font: 800 0.76rem "Montserrat", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+    }
+
+    .required {
+      font-size: 0.86rem;
+      color: #ffffff;
+      font-weight: 700;
+      margin-left: 0.22rem;
+    }
+
+    .inquiry-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .option {
+      cursor: pointer;
+      background: #f1f1f1;
+      color: #151515;
+      border-radius: 999px;
+      padding: 0.56rem 1.28rem;
+      font-size: 0.98rem;
+      line-height: 1;
+      font-weight: 500;
+      transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+    }
+
+    .option:hover,
+    .option:focus-within {
+      transform: translateY(-1px);
+      box-shadow: 0 0 0 2px rgba(255, 95, 31, 0.6);
+    }
+
+    .option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .option:has(input:checked) {
+      background: #fff3ee;
+      box-shadow: 0 0 0 2px var(--accent), 0 0 14px rgba(255, 95, 31, 0.45);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.9rem;
+      margin-bottom: 1.05rem;
+    }
+
+    .two-col {
+      grid-template-columns: 1fr;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.34rem;
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 0.82rem 1.1rem;
+      font: 500 1rem "Montserrat", sans-serif;
+      background: #ececec;
+      color: #1b1b1b;
+    }
+
+    textarea {
+      border-radius: 1.4rem;
+      min-height: 9rem;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: 2px solid #9be7ff;
+      outline-offset: 1px;
+    }
+
+    .helper {
+      margin: 0 0 0.75rem;
+      color: #ffffff;
+      line-height: 1.34;
+      font-size: 0.95rem;
+    }
+
+    .submit-wrap {
+      margin-top: 1.6rem;
+    }
+
+    .submit-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 0.8rem 1.65rem;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #121212;
+      background: #f4f4f4;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover,
+    .submit-btn:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: 0 0 0 2px rgba(155, 231, 255, 0.75);
+      outline: none;
+    }
+
+    .conditional-field {
+      display: none;
+    }
+
+    .conditional-field.is-visible {
+      display: grid;
+    }
+
+    .partner-form.is-hidden {
+      display: none;
+    }
+
+    .form-success {
+      display: none;
+      width: min(100%, 760px);
+      margin: 0 auto;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid var(--accent);
+      border-radius: 1rem;
+      background: rgba(16, 29, 36, 0.72);
+      color: #ffffff;
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .form-success.is-visible {
+      display: block;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (min-width: 760px) {
+      .two-col {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .partner-contact-inner {
+        padding-inline: 0.65rem;
+      }
+
+      .partner-form {
+        padding-inline: 0.35rem;
+      }
+
+      .partner-contact-title {
+        font-size: clamp(1.6rem, 9.2vw, 3.4rem);
+        letter-spacing: 0.015em;
+      }
+
+      .section-title {
+        text-align: center;
+      }
+
+      .inquiry-options {
+        justify-content: center;
+        padding-inline: 0.4rem;
+      }
+
+      .option {
+        text-align: center;
+      }
+
+      .submit-wrap {
+        display: flex;
+        justify-content: center;
+        padding-inline: 0.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell nav-row">
+      <a class="brand" href="index.html#hero">MARIN MUSIC GROUP</a>
+      <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav">
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="main-nav" class="mobile-nav bottom-nav" aria-label="Main navigation">
+        <a href="about.html" class="nav-item">ABOUT</a>
+        <a href="partner-with-us.html" class="nav-item">PARTNER WITH US</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="partner-contact shell">
+      <div class="partner-contact-inner reveal visible">
+        <p class="section-label">LET'S BUILD TOGETHER</p>
+        <h1 class="partner-contact-title glow-title">PARTNER WITH US</h1>
+        <p class="partner-contact-intro">
+          <span class="partner-contact-intro-strong">We partner with a limited number of artists each month to maintain quality.</span>
+          <span class="partner-contact-intro-regular"> Every submission is reviewed carefully, and if we see potential to push your music further, we'll reach out.</span>
+        </p>
+
+        <form id="partnerForm" class="partner-form" action="#" method="post">
+          <p class="section-title">Partnership Type <span class="required">(required)</span></p>
+          <div class="inquiry-options" role="radiogroup" aria-label="Partnership Type">
+            <label class="option">
+              <input id="inquiryPaidGrowth" type="radio" name="inquiryType" value="paid-growth" required>
+              Paid Growth
+            </label>
+            <label class="option">
+              <input id="inquiryLicensing" type="radio" name="inquiryType" value="licensing" required>
+              Exclusive Licensing
+            </label>
+          </div>
+
+          <div id="budgetFieldRow" class="row conditional-field">
+            <div>
+              <p class="helper">
+                Paid Growth partnerships are designed for artists building long-term audience acquisition systems, beginning with a 3-month foundational growth phase to establish scalable infrastructure and measurable momentum.
+              </p>
+              <label for="budget">Monthly Growth Investment Capacity (AUD) <span class="required">(required)</span></label>
+              <p class="helper">
+                Please indicate the level of monthly investment you are prepared to deploy.
+              </p>
+              <select id="budget" name="budget">
+                <option value="" selected disabled>Select budget range</option>
+                <option value="under-1500">Under $1,500</option>
+                <option value="1500-2500">$1,500 – $2,500</option>
+                <option value="2500-5000">$2,500 – $5,000</option>
+                <option value="5000-plus">$5,000+</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="musicFieldRow" class="row conditional-field">
+            <div>
+              <p class="helper">
+                For artists demonstrating strong traction, we deploy our own capital to scale the record in exchange for structured revenue participation.
+              </p>
+              <label for="demoLink">Demo <span class="required">(required)</span></label>
+              <p class="helper">Please share a private streaming link via <strong>SoundCloud, Dropbox or Google Drive.</strong></p>
+              <input id="demoLink" name="demoLink" type="url" placeholder="https://">
+            </div>
+          </div>
+
+          <p class="section-title">Name</p>
+          <div class="row two-col">
+            <div>
+              <label for="firstName">First Name <span class="required">(required)</span></label>
+              <input id="firstName" name="firstName" type="text" autocomplete="given-name" required>
+            </div>
+            <div>
+              <label for="lastName">Last Name <span class="required">(required)</span></label>
+              <input id="lastName" name="lastName" type="text" autocomplete="family-name" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="artistName">Artist or Label Name <span class="required">(required)</span></label>
+              <input id="artistName" name="artistName" type="text" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="email">Email <span class="required">(required)</span></label>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+            </div>
+          </div>
+
+          <p class="section-title">Links</p>
+          <p class="helper">
+            Paste your multi-link to your Spotify, Instagram, YouTube, and if you're a label or team, a multi-link to your roster (Linktree, FeatureFM, etc.)
+          </p>
+          <div class="row">
+            <div>
+              <label for="links" class="sr-only">Links</label>
+              <input id="links" name="links" type="url" placeholder="http://" required>
+            </div>
+          </div>
+
+          <div class="submit-wrap">
+            <button class="submit-btn" type="submit">Submit</button>
+          </div>
+        </form>
+
+        <p id="partnerFormSuccess" class="form-success" role="status" aria-live="polite">
+          Thank you for your submission. We'll be in touch within 3 business days if we see a strong fit.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer shell reveal visible">
+    <p class="copyright">© 2026 MARIN MUSIC GROUP</p>
+
+    <nav class="socials" aria-label="Social links">
+      <a href="#" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M16.5 3c.2 1.7 1.1 3.1 2.6 3.9 1 .6 2 .9 3 .9v3.2c-1.4 0-2.8-.3-4.1-.9l-.2-.1v6.8c0 2.1-.8 3.8-2.2 5.1a7.2 7.2 0 0 1-5 2A7.1 7.1 0 0 1 3.5 17a7.1 7.1 0 0 1 7.1-7.1h.7v3.2h-.7a3.9 3.9 0 1 0 3.9 3.9V3h2z"></path>
+        </svg>
+      </a>
+      <a href="#" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4z"></path>
+          <path d="M17.8 2.8H6.2A3.4 3.4 0 0 0 2.8 6.2v11.6a3.4 3.4 0 0 0 3.4 3.4h11.6a3.4 3.4 0 0 0 3.4-3.4V6.2a3.4 3.4 0 0 0-3.4-3.4zm1.6 15a1.6 1.6 0 0 1-1.6 1.6H6.2a1.6 1.6 0 0 1-1.6-1.6V6.2a1.6 1.6 0 0 1 1.6-1.6h11.6a1.6 1.6 0 0 1 1.6 1.6v11.6z"></path>
+          <circle cx="17.5" cy="6.5" r="1.2"></circle>
+        </svg>
+      </a>
+      <a href="#" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M22 8.4c-.2-1.3-1.2-2.3-2.5-2.5C17.3 5.5 12 5.5 12 5.5s-5.3 0-7.5.4A3 3 0 0 0 2 8.4c-.4 2.3-.4 3.6-.4 3.6s0 1.3.4 3.6c.2 1.3 1.2 2.3 2.5 2.5 2.2.4 7.5.4 7.5.4s5.3 0 7.5-.4c1.3-.2 2.3-1.2 2.5-2.5.4-2.3.4-3.6.4-3.6s0-1.3-.4-3.6zM10 15.2V8.8L15.6 12 10 15.2z"></path>
+        </svg>
+      </a>
+    </nav>
+
+    <a class="email" href="mailto:josh@marinmusicgroup.com.au">JOSH@MARINMUSICGROUP.COM.AU</a>
+  </footer>
+  <script>
+    const partnerForm = document.querySelector('#partnerForm');
+    const partnerFormSuccess = document.querySelector('#partnerFormSuccess');
+    const inquiryPaidGrowth = document.querySelector('#inquiryPaidGrowth');
+    const inquiryLicensing = document.querySelector('#inquiryLicensing');
+    const budgetFieldRow = document.querySelector('#budgetFieldRow');
+    const musicFieldRow = document.querySelector('#musicFieldRow');
+    const budgetField = document.querySelector('#budget');
+    const demoLinkField = document.querySelector('#demoLink');
+
+    const updateInquiryFields = () => {
+      if (!inquiryPaidGrowth || !inquiryLicensing || !budgetFieldRow || !musicFieldRow || !budgetField || !demoLinkField) {
+        return;
+      }
+
+      if (inquiryPaidGrowth.checked) {
+        budgetFieldRow.classList.add('is-visible');
+        musicFieldRow.classList.remove('is-visible');
+        budgetField.required = true;
+        demoLinkField.required = false;
+        demoLinkField.value = '';
+      } else if (inquiryLicensing.checked) {
+        musicFieldRow.classList.add('is-visible');
+        budgetFieldRow.classList.remove('is-visible');
+        budgetField.required = false;
+        budgetField.value = '';
+        demoLinkField.required = true;
+      } else {
+        budgetFieldRow.classList.remove('is-visible');
+        musicFieldRow.classList.remove('is-visible');
+        budgetField.required = false;
+        demoLinkField.required = false;
+      }
+    };
+
+    if (partnerForm && partnerFormSuccess) {
+      if (inquiryPaidGrowth) {
+        inquiryPaidGrowth.addEventListener('change', updateInquiryFields);
+      }
+      if (inquiryLicensing) {
+        inquiryLicensing.addEventListener('change', updateInquiryFields);
+      }
+      updateInquiryFields();
+
+      partnerForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        if (!partnerForm.checkValidity()) {
+          partnerForm.reportValidity();
+          return;
+        }
+
+        partnerForm.classList.add('is-hidden');
+        partnerFormSuccess.classList.add('is-visible');
+      });
+    }
+  </script>
+</body>
+</html>

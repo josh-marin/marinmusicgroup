@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About | Marin Music Group</title>
+  <meta name="description" content="About MARIN Music Group">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:ital,wght@0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+  <style>
+    .about-main {
+      background: linear-gradient(180deg, var(--bg-black) 0%, var(--bg-deep) 100%);
+      padding-top: 0;
+    }
+
+    .site-header {
+      border-bottom: 0;
+    }
+
+    .about-main .shell {
+      width: min(100%, 1200px);
+      margin-inline: auto;
+      padding-inline: clamp(1rem, 4vw, 2rem);
+    }
+
+    .about-hero {
+      padding: clamp(3rem, 6vw, 4.8rem) 0 clamp(1.4rem, 3vw, 2.2rem);
+      min-height: auto;
+      text-align: center;
+    }
+
+    .about-kicker {
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: clamp(0.78rem, 1.6vw, 0.9rem);
+    }
+
+    .about-hero h1 {
+      margin-top: 0.65rem;
+      font-family: "Anton", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      line-height: 0.96;
+      font-size: clamp(2.6rem, 8vw, 6.2rem);
+      color: #ffffff;
+      text-shadow: 0 0 10px rgba(182, 243, 255, 0.62), 0 0 22px rgba(182, 243, 255, 0.28);
+      transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), filter 260ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .about-hero h1:hover {
+      transform: translate3d(0, -3px, 0) scale(1.012);
+      filter: brightness(1.08);
+    }
+
+    .about-lead {
+      margin: 1rem auto 0;
+      max-width: 980px;
+      color: #ffffff;
+      font-size: clamp(0.98rem, 1.7vw, 1.24rem);
+      line-height: 1.4;
+    }
+
+    .about-lead-emphasis {
+      font-style: italic;
+    }
+
+    .founder-meta {
+      margin: 1.2rem auto 0;
+      max-width: fit-content;
+      border: 1px solid rgba(255, 95, 31, 0.45);
+      border-radius: 999px;
+      padding: 0.62rem 1rem;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: clamp(0.78rem, 1.3vw, 0.95rem);
+      background: rgba(255, 95, 31, 0.1);
+      transition: transform 220ms ease, box-shadow 220ms ease, background-color 220ms ease;
+      cursor: default;
+    }
+
+    .founder-meta:hover {
+      transform: translateY(-1px);
+      background: #261814;
+      box-shadow: 0 0 18px rgba(255, 95, 31, 0.22);
+    }
+
+    .about-section {
+      padding: clamp(2rem, 5.2vw, 3.4rem) 0;
+      text-align: center;
+    }
+
+    .what-we-do-section {
+      padding-top: clamp(2rem, 5.2vw, 3.4rem);
+    }
+
+    .about-section h2 {
+      font-family: "Anton", sans-serif;
+      font-size: clamp(2rem, 6.6vw, 5rem);
+      line-height: 0.98;
+      text-transform: uppercase;
+      color: #f7f7f7;
+      text-shadow: 0 0 10px rgba(182, 243, 255, 0.62), 0 0 22px rgba(182, 243, 255, 0.28);
+      animation: glowPulse 3.2s ease-in-out infinite;
+    }
+
+    .about-cta-title {
+      font-size: clamp(1.35rem, 2.7vw, 2.65rem);
+      line-height: 1.02;
+    }
+
+    .about-cta-title .underlined {
+      white-space: nowrap;
+    }
+
+    .underlined {
+      position: relative;
+      display: inline-block;
+      padding-bottom: 0.22em;
+    }
+
+    .underlined::after {
+      content: none;
+    }
+
+    .about-section p {
+      margin: 1rem auto 0;
+      max-width: 940px;
+      color: #ffffff;
+      font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+      line-height: 1.45;
+    }
+
+    .what-we-do-section p {
+      max-width: 980px;
+      font-size: clamp(0.98rem, 1.7vw, 1.24rem);
+      line-height: 1.4;
+    }
+
+
+    .montserrat-black {
+      font-family: "Montserrat", sans-serif;
+      font-weight: 900;
+    }
+
+    .about-section p.services-helper {
+      font-style: normal;
+      font-weight: 400;
+      font-size: clamp(0.98rem, 1.7vw, 1.24rem);
+      line-height: 1.4;
+      color: #ffffff;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .about-section p.cta-helper {
+      font-style: normal;
+      font-weight: 400;
+      font-size: clamp(0.98rem, 1.7vw, 1.24rem);
+      line-height: 1.4;
+      color: #ffffff;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .about-section ul {
+      margin: 1rem auto 0;
+      list-style: none;
+      max-width: 860px;
+      display: grid;
+      gap: 0.62rem;
+    }
+
+    .about-section li {
+      color: #ffffff;
+      font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+    }
+
+    .what-we-do-copy {
+      margin: 0.8rem auto 0;
+      list-style: none;
+      max-width: 860px;
+      display: grid;
+      gap: 0.62rem;
+    }
+
+    .what-we-do-copy li {
+      color: #ffffff;
+      font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+      line-height: 1.45;
+    }
+
+    .services-grid {
+      margin-top: 1.9rem;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.7rem;
+      width: min(100%, 1080px);
+      margin-inline: auto;
+      padding-inline: clamp(0.2rem, 1.8vw, 0.9rem);
+    }
+
+    .service-card {
+      border: 1.5px solid var(--accent);
+      border-radius: 999px;
+      min-height: 72px;
+      display: grid;
+      place-items: center;
+      padding: 0.78rem 1.1rem;
+      color: #f7f2ed;
+      font-family: "Montserrat", sans-serif;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      text-transform: none;
+      font-size: clamp(0.95rem, 1.2vw, 1.12rem);
+      line-height: 1.2;
+      background: #201512;
+      transition: transform 220ms ease, box-shadow 220ms ease, background-color 220ms ease;
+      cursor: pointer;
+      width: 100%;
+      appearance: none;
+    }
+
+    .service-card:hover {
+      transform: translateY(-1px);
+      background: #261814;
+      box-shadow: 0 0 18px rgba(255, 95, 31, 0.22);
+    }
+
+    .service-card:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .service-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      display: grid;
+      place-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 180ms ease;
+    }
+
+    .service-modal.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .service-modal__backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .service-modal__dialog {
+      position: relative;
+      z-index: 1;
+      width: min(92vw, 620px);
+      background: #ffffff;
+      border: 3px solid var(--accent);
+      border-radius: 16px;
+      padding: clamp(1.2rem, 3vw, 2rem);
+      box-shadow: 0 22px 40px rgba(0, 0, 0, 0.3);
+      color: #111111;
+    }
+
+    .service-modal__close {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      border: 0;
+      background: transparent;
+      color: #222222;
+      font-size: 1.8rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .service-modal__dialog h3 {
+      font-family: "Anton", sans-serif;
+      font-size: clamp(1.55rem, 4vw, 2.4rem);
+      color: #111111;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .service-modal__dialog p {
+      margin-top: 0.8rem;
+      font-family: "Montserrat", sans-serif;
+      font-size: clamp(0.98rem, 2vw, 1.15rem);
+      color: #2a2a2a;
+      word-break: break-word;
+    }
+
+    .service-modal__nav {
+      margin-top: 1.1rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.6rem;
+    }
+
+    .service-modal__arrow {
+      border: 1.5px solid var(--accent);
+      background: #fff;
+      color: var(--accent);
+      border-radius: 999px;
+      min-width: 44px;
+      min-height: 38px;
+      padding: 0.3rem 0.8rem;
+      font-size: 1.1rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: transform 180ms ease, background-color 180ms ease, color 180ms ease;
+    }
+
+    .service-modal__arrow:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 95, 31, 0.1);
+    }
+
+    .about-cta-btn {
+      margin-top: 1.9rem;
+      width: min(100% - 0.5rem, 620px);
+    }
+
+    @media (max-width: 1000px) {
+      .services-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .about-main {
+        padding: 0.25rem 0 1rem;
+      }
+
+      .about-hero,
+      .about-section {
+        padding-left: clamp(0.95rem, 4vw, 1.3rem);
+        padding-right: clamp(0.95rem, 4vw, 1.3rem);
+      }
+
+      .about-cta-title .underlined {
+        white-space: normal;
+      }
+
+      .services-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding-inline: clamp(0.5rem, 3vw, 0.9rem);
+      }
+
+      .about-cta-btn {
+        width: min(100% - 0.9rem, 620px);
+      }
+
+    }
+
+    @media (max-width: 500px) {
+      .services-grid {
+        grid-template-columns: 1fr;
+        padding-inline: clamp(0.55rem, 4vw, 1rem);
+      }
+
+      .about-cta-btn {
+        width: min(100% - 1rem, 620px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell nav-row">
+      <a class="brand" href="index.html">MARIN MUSIC GROUP</a>
+      <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav">
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="main-nav" class="mobile-nav bottom-nav" aria-label="Main navigation">
+        <a href="about.html" class="nav-item">ABOUT</a>
+        <a href="partner-with-us.html" class="nav-item">PARTNER WITH US</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="hero" class="about-main">
+    <section class="about-hero shell reveal">
+      <p class="about-kicker">Founded by Joshua Marin</p>
+      <h1>About MARIN Music Group</h1>
+      <p class="about-lead">
+        MARIN Music Group is an independent music growth company built for artists who treat their career like a business.
+        Built from execution — not theory — MMG engineered the systems behind millions of independent streams and listeners into structured, repeatable growth infrastructure.
+        <br><br>
+        <span class="about-lead-emphasis">Today, those systems are deployed for a focused roster of partners through disciplined paid acquisition and capital-backed scaling.</span>
+      </p>
+      <p class="founder-meta">10M+ streams for our artists</p>
+    </section>
+
+    <section class="about-section what-we-do-section shell reveal">
+      <h2><span class="underlined">What We Do</span></h2>
+      <p>
+        We build structured audience acquisition infrastructure around music.
+        Artists invest first. We scale what proves.
+        <br><br>
+        Through disciplined advertising, creative testing, and algorithm-aware release architecture, we convert attention into owned audiences and long-term catalog value.
+        <br><br>
+        <span class="montserrat-black">Growth is engineered — not guessed.</span>
+      </p>
+    </section>
+
+    <section class="about-section shell reveal">
+      <h2><span class="underlined">Services</span></h2>
+      <p class="services-helper">Tap on a service to read more</p>
+      <div class="services-grid">
+        <button type="button" class="service-card service-trigger" data-service="Advertising">Advertising</button>
+        <button type="button" class="service-card service-trigger" data-service="Creative">Creative</button>
+        <button type="button" class="service-card service-trigger" data-service="Release Strategy">Release Strategy</button>
+        <button type="button" class="service-card service-trigger" data-service="Catalog Growth">Catalog Growth</button>
+      </div>
+    </section>
+
+    <section class="about-section shell reveal">
+      <h2 class="about-cta-title"><span class="underlined">LET'S BUILD TOGETHER</span></h2>
+      <p class="cta-helper">Submit your music to partner with MARIN Music Group</p>
+      <a class="oval-btn oval-btn-accent about-cta-btn" href="partner-with-us.html">PARTNER WITH US</a>
+    </section>
+  </main>
+
+  <div class="service-modal" id="service-modal" aria-hidden="true">
+    <button class="service-modal__backdrop" type="button" aria-label="Close popup" data-close-modal></button>
+    <div class="service-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="service-modal-title">
+      <button class="service-modal__close" type="button" aria-label="Close popup" data-close-modal>&times;</button>
+      <h3 id="service-modal-title">Service</h3>
+      <p id="service-modal-copy">xoxoxoxoxoxoxoxoxoxoxoxoxooxox</p>
+      <div class="service-modal__nav" aria-label="Service navigation">
+        <button class="service-modal__arrow" type="button" id="service-prev" aria-label="Previous service">&#8592;</button>
+        <button class="service-modal__arrow" type="button" id="service-next" aria-label="Next service">&#8594;</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer shell reveal">
+    <p class="copyright">© 2026 MARIN MUSIC GROUP</p>
+
+    <nav class="socials" aria-label="Social links">
+      <a href="#" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M16.5 3c.2 1.7 1.1 3.1 2.6 3.9 1 .6 2 .9 3 .9v3.2c-1.4 0-2.8-.3-4.1-.9l-.2-.1v6.8c0 2.1-.8 3.8-2.2 5.1a7.2 7.2 0 0 1-5 2A7.1 7.1 0 0 1 3.5 17a7.1 7.1 0 0 1 7.1-7.1h.7v3.2h-.7a3.9 3.9 0 1 0 3.9 3.9V3h2z"></path>
+        </svg>
+      </a>
+      <a href="#" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4z"></path>
+          <path d="M17.8 2.8H6.2A3.4 3.4 0 0 0 2.8 6.2v11.6a3.4 3.4 0 0 0 3.4 3.4h11.6a3.4 3.4 0 0 0 3.4-3.4V6.2a3.4 3.4 0 0 0-3.4-3.4zm1.6 15a1.6 1.6 0 0 1-1.6 1.6H6.2a1.6 1.6 0 0 1-1.6-1.6V6.2a1.6 1.6 0 0 1 1.6-1.6h11.6a1.6 1.6 0 0 1 1.6 1.6v11.6z"></path>
+          <circle cx="17.5" cy="6.5" r="1.2"></circle>
+        </svg>
+      </a>
+      <a href="#" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M22 8.4c-.2-1.3-1.2-2.3-2.5-2.5C17.3 5.5 12 5.5 12 5.5s-5.3 0-7.5.4A3 3 0 0 0 2 8.4c-.4 2.3-.4 3.6-.4 3.6s0 1.3.4 3.6c.2 1.3 1.2 2.3 2.5 2.5 2.2.4 7.5.4 7.5.4s5.3 0 7.5-.4c1.3-.2 2.3-1.2 2.5-2.5.4-2.3.4-3.6.4-3.6s0-1.3-.4-3.6zM10 15.2V8.8L15.6 12 10 15.2z"></path>
+        </svg>
+      </a>
+    </nav>
+
+    <a class="email" href="mailto:hi@marinmusicgroup.com.au">HI@MARINMUSICGROUP.COM.AU</a>
+  </footer>
+
+  <script>
+    const serviceModal = document.getElementById("service-modal");
+    const serviceTitle = document.getElementById("service-modal-title");
+    const serviceCopy = document.getElementById("service-modal-copy");
+    const servicePrev = document.getElementById("service-prev");
+    const serviceNext = document.getElementById("service-next");
+    const serviceTriggers = document.querySelectorAll(".service-trigger");
+    const closeModalButtons = document.querySelectorAll("[data-close-modal]");
+    const serviceOrder = Array.from(serviceTriggers).map((button) => button.getAttribute("data-service")).filter(Boolean);
+    let activeServiceIndex = 0;
+
+    const serviceDescriptions = {
+      "Advertising": "We operate a disciplined Meta advertising framework built for large-scale audience acquisition. Using broad targeting and structured creative testing, we identify scalable demand and compound results over time. Our average tier-1 listener acquisition sits between $0.30-$0.50 AUD.",
+      "Creative": "Attention is the bottleneck. We produce and test high-volume creative designed to convert passive scrollers into active listeners. Every asset is performance-driven and refined through data.",
+      "Release Strategy": "We architect releases for momentum, not momentary spikes. Positioning, sequencing, and distribution timing are structured to maximise algorithmic lift and compound catalog performance.",
+      "Catalog Growth": "A single release does not build leverage. We structure campaigns to compound streams across the entire catalog, increasing lifetime value and creating long-term revenue durability."
+    };
+
+    const updateServiceModal = (serviceName) => {
+      if (!serviceModal || !serviceTitle || !serviceCopy) return;
+      serviceTitle.textContent = serviceName;
+      serviceCopy.textContent = serviceDescriptions[serviceName] || "xoxoxoxoxoxoxoxoxoxoxoxoxooxox";
+    };
+
+    const openServiceModal = (serviceName) => {
+      if (!serviceModal) return;
+      const idx = serviceOrder.indexOf(serviceName);
+      activeServiceIndex = idx >= 0 ? idx : 0;
+      updateServiceModal(serviceOrder[activeServiceIndex] || serviceName);
+      serviceModal.classList.add("is-open");
+      serviceModal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("nav-open");
+    };
+
+    const cycleService = (direction) => {
+      if (!serviceOrder.length) return;
+      activeServiceIndex = (activeServiceIndex + direction + serviceOrder.length) % serviceOrder.length;
+      updateServiceModal(serviceOrder[activeServiceIndex]);
+    };
+
+    const closeServiceModal = () => {
+      if (!serviceModal) return;
+      serviceModal.classList.remove("is-open");
+      serviceModal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("nav-open");
+    };
+
+    serviceTriggers.forEach((button) => {
+      button.addEventListener("click", () => {
+        const serviceName = button.getAttribute("data-service") || "Service";
+        openServiceModal(serviceName);
+      });
+    });
+
+    closeModalButtons.forEach((button) => {
+      button.addEventListener("click", closeServiceModal);
+    });
+
+    servicePrev?.addEventListener("click", () => cycleService(-1));
+    serviceNext?.addEventListener("click", () => cycleService(1));
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && serviceModal?.classList.contains("is-open")) {
+        closeServiceModal();
+      }
+      if (!serviceModal?.classList.contains("is-open")) return;
+      if (event.key === "ArrowLeft") {
+        cycleService(-1);
+      }
+      if (event.key === "ArrowRight") {
+        cycleService(1);
+      }
+    });
+
+  </script>
+</body>
+</html>
