@@ -90,13 +90,6 @@
       color: var(--accent);
     }
 
-    .required {
-      font-size: 0.86rem;
-      color: #ffffff;
-      font-weight: 700;
-      margin-left: 0.22rem;
-    }
-
     .inquiry-options {
       display: flex;
       flex-wrap: wrap;
@@ -110,6 +103,9 @@
       color: #151515;
       border-radius: 999px;
       padding: 0.56rem 1.28rem;
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
       font-size: 0.98rem;
       line-height: 1;
       font-weight: 500;
@@ -158,6 +154,7 @@
       width: 100%;
       border: none;
       border-radius: 999px;
+      min-height: 52px;
       padding: 0.82rem 1.1rem;
       font: 500 1rem "Montserrat", sans-serif;
       background: #ececec;
@@ -266,6 +263,10 @@
         padding-inline: 0.35rem;
       }
 
+      .partner-contact-intro {
+        margin-bottom: 1.7rem;
+      }
+
       .partner-contact-title {
         white-space: normal;
         font-size: clamp(1.6rem, 9.2vw, 3.4rem);
@@ -280,16 +281,27 @@
       .inquiry-options {
         justify-content: center;
         padding-inline: 0.4rem;
+        margin-bottom: 1rem;
       }
 
       .option {
         text-align: center;
       }
 
+      .section-title {
+        margin-bottom: 0.5rem;
+      }
+
+      .row {
+        gap: 0.68rem;
+        margin-bottom: 0.78rem;
+      }
+
       .submit-wrap {
         display: flex;
         justify-content: center;
         padding-inline: 0.4rem;
+        margin-top: 1.1rem;
       }
     }
   </style>
@@ -297,7 +309,7 @@
 <body class="partner-page">
   <header class="site-header">
     <div class="shell nav-row">
-      <a class="brand" href="index.html#hero">MARIN MUSIC GROUP</a>
+      <a class="brand" href="/#hero">MARIN MUSIC GROUP</a>
       <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav">
         <span></span>
         <span></span>
@@ -318,7 +330,7 @@
         </p>
 
         <form id="partnerForm" class="partner-form" action="#" method="post">
-          <p class="section-title">Partnership Type <span class="required">(required)</span></p>
+          <p class="section-title">Partnership Type</p>
           <div class="inquiry-options" role="radiogroup" aria-label="Partnership Type">
             <label class="option">
               <input id="inquiryPaidGrowth" type="radio" name="inquiryType" value="paid-growth" required>
@@ -330,16 +342,18 @@
             </label>
           </div>
 
-          <div id="budgetFieldRow" class="row conditional-field">
+          <div id="partnershipCopyRow" class="row conditional-field">
             <div>
-              <p class="helper">
-                Paid Growth partnerships are designed for artists building long-term audience acquisition systems, beginning with a 3-month foundational growth phase to establish scalable infrastructure and measurable momentum.
+              <p id="partnershipCopy" class="helper">
+                For artists building long-term audience acquisition systems. Partnerships begin with a 3-month foundational growth phase.
               </p>
-              <label for="budget">Monthly Growth Investment Capacity (AUD) <span class="required">(required)</span></label>
-              <p class="helper">
-                Please indicate the level of monthly investment you are prepared to deploy.
-              </p>
-              <select id="budget" name="budget">
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="budget">Monthly Growth Investment Capacity (AUD)</label>
+              <select id="budget" name="budget" required>
                 <option value="" selected disabled>Select budget range</option>
                 <option value="under-1500">Under $1,500</option>
                 <option value="1500-2500">$1,500 – $2,500</option>
@@ -349,51 +363,31 @@
             </div>
           </div>
 
-          <div id="musicFieldRow" class="row conditional-field">
+          <div class="row">
             <div>
-              <p class="helper">
-                For artists demonstrating strong traction, we deploy our own capital to scale the record in exchange for structured revenue participation.
-              </p>
-              <label for="demoLink">Demo <span class="required">(required)</span></label>
-              <p class="helper">Please share a private streaming link via <strong>SoundCloud, Dropbox or Google Drive.</strong></p>
-              <input id="demoLink" name="demoLink" type="url" placeholder="https://">
-            </div>
-          </div>
-
-          <p class="section-title">Name</p>
-          <div class="row two-col">
-            <div>
-              <label for="firstName">First Name <span class="required">(required)</span></label>
-              <input id="firstName" name="firstName" type="text" autocomplete="given-name" required>
-            </div>
-            <div>
-              <label for="lastName">Last Name <span class="required">(required)</span></label>
-              <input id="lastName" name="lastName" type="text" autocomplete="family-name" required>
+              <label for="fullName">Full Name</label>
+              <input id="fullName" name="fullName" type="text" autocomplete="name" required>
             </div>
           </div>
 
           <div class="row">
             <div>
-              <label for="artistName">Artist or Label Name <span class="required">(required)</span></label>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="artistName">Artist / Label Name</label>
               <input id="artistName" name="artistName" type="text" required>
             </div>
           </div>
 
           <div class="row">
             <div>
-              <label for="email">Email <span class="required">(required)</span></label>
-              <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
-            </div>
-          </div>
-
-          <p class="section-title">Links</p>
-          <p class="helper">
-            Paste your multi-link to your Spotify, Instagram, YouTube, and if you're a label or team, a multi-link to your roster (Linktree, FeatureFM, etc.)
-          </p>
-          <div class="row">
-            <div>
-              <label for="links" class="sr-only">Links</label>
-              <input id="links" name="links" type="url" placeholder="http://" required>
+              <label for="links">Primary Links (Spotify / Instagram / YouTube)</label>
+              <input id="links" name="links" type="text" placeholder="https://..." required>
             </div>
           </div>
 
@@ -439,33 +433,22 @@
     const partnerFormSuccess = document.querySelector('#partnerFormSuccess');
     const inquiryPaidGrowth = document.querySelector('#inquiryPaidGrowth');
     const inquiryLicensing = document.querySelector('#inquiryLicensing');
-    const budgetFieldRow = document.querySelector('#budgetFieldRow');
-    const musicFieldRow = document.querySelector('#musicFieldRow');
-    const budgetField = document.querySelector('#budget');
-    const demoLinkField = document.querySelector('#demoLink');
+    const partnershipCopyRow = document.querySelector('#partnershipCopyRow');
+    const partnershipCopy = document.querySelector('#partnershipCopy');
 
     const updateInquiryFields = () => {
-      if (!inquiryPaidGrowth || !inquiryLicensing || !budgetFieldRow || !musicFieldRow || !budgetField || !demoLinkField) {
+      if (!inquiryPaidGrowth || !inquiryLicensing || !partnershipCopyRow || !partnershipCopy) {
         return;
       }
 
       if (inquiryPaidGrowth.checked) {
-        budgetFieldRow.classList.add('is-visible');
-        musicFieldRow.classList.remove('is-visible');
-        budgetField.required = true;
-        demoLinkField.required = false;
-        demoLinkField.value = '';
+        partnershipCopyRow.classList.add('is-visible');
+        partnershipCopy.textContent = 'For artists building long-term audience acquisition systems. Partnerships begin with a 3-month foundational growth phase.';
       } else if (inquiryLicensing.checked) {
-        musicFieldRow.classList.add('is-visible');
-        budgetFieldRow.classList.remove('is-visible');
-        budgetField.required = false;
-        budgetField.value = '';
-        demoLinkField.required = true;
+        partnershipCopyRow.classList.add('is-visible');
+        partnershipCopy.textContent = 'For artists demonstrating strong traction and open to capital-backed scaling in exchange for structured revenue participation.';
       } else {
-        budgetFieldRow.classList.remove('is-visible');
-        musicFieldRow.classList.remove('is-visible');
-        budgetField.required = false;
-        demoLinkField.required = false;
+        partnershipCopyRow.classList.remove('is-visible');
       }
     };
 
