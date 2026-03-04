@@ -326,7 +326,7 @@
       <div class="partner-contact-inner reveal visible">
         <h1 class="partner-contact-title glow-title">PARTNER WITH US</h1>
         <p class="partner-contact-intro">
-          <span class="partner-contact-intro-strong">We partner with a limited number of artists each month to maintain quality.</span>
+          <span class="partner-contact-intro-regular">We review a limited number of partnerships each month.</span>
         </p>
 
         <form id="partnerForm" class="partner-form" action="#" method="post">
@@ -345,21 +345,29 @@
           <div id="partnershipCopyRow" class="row conditional-field">
             <div>
               <p id="partnershipCopy" class="helper">
-                For artists building long-term audience acquisition systems. Partnerships begin with a 3-month foundational growth phase.
+                For artists building structured, long-term audience acquisition systems.
               </p>
             </div>
           </div>
 
-          <div class="row">
+          <div id="budgetRow" class="row conditional-field">
             <div>
               <label for="budget">Monthly Growth Investment Capacity (AUD)</label>
-              <select id="budget" name="budget" required>
+              <select id="budget" name="budget">
                 <option value="" selected disabled>Select budget range</option>
                 <option value="under-1500">Under $1,500</option>
                 <option value="1500-2500">$1,500 – $2,500</option>
                 <option value="2500-5000">$2,500 – $5,000</option>
                 <option value="5000-plus">$5,000+</option>
               </select>
+            </div>
+          </div>
+
+          <div id="demoRow" class="row conditional-field">
+            <div>
+              <label for="demoSubmission">Demo Submission</label>
+              <p class="helper">Submit your strongest commercially viable record via SoundCloud or Google Drive. Please ensure all links have public or shared access enabled.</p>
+              <input id="demoSubmission" name="demoSubmission" type="url" placeholder="https://">
             </div>
           </div>
 
@@ -435,20 +443,38 @@
     const inquiryLicensing = document.querySelector('#inquiryLicensing');
     const partnershipCopyRow = document.querySelector('#partnershipCopyRow');
     const partnershipCopy = document.querySelector('#partnershipCopy');
+    const budgetRow = document.querySelector('#budgetRow');
+    const budgetField = document.querySelector('#budget');
+    const demoRow = document.querySelector('#demoRow');
+    const demoSubmissionField = document.querySelector('#demoSubmission');
 
     const updateInquiryFields = () => {
-      if (!inquiryPaidGrowth || !inquiryLicensing || !partnershipCopyRow || !partnershipCopy) {
+      if (!inquiryPaidGrowth || !inquiryLicensing || !partnershipCopyRow || !partnershipCopy || !budgetRow || !budgetField || !demoRow || !demoSubmissionField) {
         return;
       }
 
       if (inquiryPaidGrowth.checked) {
         partnershipCopyRow.classList.add('is-visible');
-        partnershipCopy.textContent = 'For artists building long-term audience acquisition systems. Partnerships begin with a 3-month foundational growth phase.';
+        budgetRow.classList.add('is-visible');
+        demoRow.classList.remove('is-visible');
+        budgetField.required = true;
+        demoSubmissionField.required = false;
+        demoSubmissionField.value = '';
+        partnershipCopy.textContent = 'For artists building structured, long-term audience acquisition systems.';
       } else if (inquiryLicensing.checked) {
         partnershipCopyRow.classList.add('is-visible');
-        partnershipCopy.textContent = 'For artists demonstrating strong traction and open to capital-backed scaling in exchange for structured revenue participation.';
+        demoRow.classList.add('is-visible');
+        budgetRow.classList.remove('is-visible');
+        demoSubmissionField.required = true;
+        budgetField.required = false;
+        budgetField.selectedIndex = 0;
+        partnershipCopy.textContent = 'For artists demonstrating measurable traction and seeking to scale through structured capital partnerships, ranging from shared investment to fully deployed capital depending on trajectory.';
       } else {
         partnershipCopyRow.classList.remove('is-visible');
+        budgetRow.classList.remove('is-visible');
+        demoRow.classList.remove('is-visible');
+        budgetField.required = false;
+        demoSubmissionField.required = false;
       }
     };
 
