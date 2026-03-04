@@ -50,9 +50,10 @@ body {
   height: 100%;
   color: var(--accent);
   text-decoration: none;
-  font-family: "Anton", sans-serif;
-  letter-spacing: 0.02em;
-  font-size: clamp(1.3rem, 4.6vw, 1.9rem);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  font-size: clamp(0.92rem, 2.8vw, 1.1rem);
   line-height: 1;
   text-align: left;
 }
@@ -499,9 +500,10 @@ body {
 
 .copyright {
   color: var(--accent);
-  font-family: "Anton", sans-serif;
-  font-size: clamp(1.45rem, 2.4vw, 2.25rem);
-  letter-spacing: 0.01em;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: clamp(0.92rem, 2.8vw, 1.1rem);
+  letter-spacing: -0.015em;
 }
 
 .socials {
@@ -536,9 +538,10 @@ body {
   text-align: right;
   color: var(--accent);
   text-decoration: none;
-  font-family: "Anton", sans-serif;
-  font-size: clamp(1.45rem, 2.4vw, 2.25rem);
-  letter-spacing: 0.01em;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: clamp(0.92rem, 2.8vw, 1.1rem);
+  letter-spacing: -0.015em;
 }
 
 .reveal {
