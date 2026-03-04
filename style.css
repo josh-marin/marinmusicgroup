@@ -471,7 +471,7 @@ body {
 .partner h2 {
   max-width: 980px;
   margin-inline: auto;
-  font-size: clamp(3rem, 6.4vw, 6rem);
+  font-size: clamp(3.2rem, 6.8vw, 6.2rem);
 }
 
 .accent-underline {
@@ -685,8 +685,8 @@ body {
   }
 
   .partner h2 {
-    font-size: clamp(2rem, 8.2vw, 3.05rem);
-    line-height: 0.98;
+    font-size: clamp(1.8rem, 7.3vw, 3rem);
+    line-height: 1;
   }
 
   .image-slot {
