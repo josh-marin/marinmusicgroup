@@ -36,7 +36,7 @@ body {
 }
 
 .nav-row {
-  min-height: 92px;
+  min-height: 114px;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
@@ -56,6 +56,12 @@ body {
   font-size: clamp(0.92rem, 2.8vw, 1.1rem);
   line-height: 1;
   text-align: left;
+}
+
+.brand img {
+  display: block;
+  width: auto;
+  height: clamp(35px, 3.9vw, 51px);
 }
 
 .mobile-nav {
@@ -561,7 +567,7 @@ body {
   }
 
   .nav-row {
-    min-height: 92px;
+    min-height: 114px;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
     row-gap: 0;
@@ -588,11 +594,11 @@ body {
 
   .mobile-nav {
     position: fixed;
-    top: 92px;
+    top: 114px;
     left: 0;
     width: 100vw;
-    height: calc(100dvh - 92px);
-    min-height: calc(100dvh - 92px);
+    height: calc(100dvh - 114px);
+    min-height: calc(100dvh - 114px);
     z-index: 10;
     display: flex;
     flex-direction: column;
@@ -660,7 +666,7 @@ body {
   .hero-content {
     padding: 0;
     transform: none;
-    min-height: calc(100svh - 92px);
+    min-height: calc(100svh - 114px);
     display: grid;
     align-content: center;
     justify-items: center;
@@ -708,11 +714,11 @@ body.nav-open {
   }
 
   .hero {
-    min-height: calc(100svh - 92px);
+    min-height: calc(100svh - 114px);
   }
 
   .hero-content {
-    min-height: calc(100svh - 92px);
+    min-height: calc(100svh - 114px);
     padding: 0;
   }
 
