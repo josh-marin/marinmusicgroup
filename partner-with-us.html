@@ -25,10 +25,7 @@
       position: relative;
     }
 
-    .partner-page main,
-    .partner-contact,
-    .partner-contact-inner {
-      overflow-x: hidden;
+    .partner-page main {
       max-width: 100%;
     }
 
@@ -40,6 +37,9 @@
     .partner-contact-inner {
       width: min(100%, 920px);
       margin: 0 auto;
+      max-width: 100%;
+      padding-inline: clamp(0.35rem, 1.2vw, 0.9rem);
+      overflow: visible;
     }
 
     .partner-contact-title {
