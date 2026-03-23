@@ -18,6 +18,16 @@
   ],
   "rewrites": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "portal.marinmusicgroup.com"
+        }
+      ],
+      "destination": "/portal.html"
+    },
+    {
       "source": "/about",
       "destination": "/about.html"
     },
