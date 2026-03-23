@@ -18,14 +18,14 @@
   ],
   "rewrites": [
     {
-      "source": "/",
+      "source": "/:path*",
       "has": [
         {
           "type": "host",
           "value": "portal.marinmusicgroup.com"
         }
       ],
-      "destination": "/portal.html"
+      "destination": "/artist-operations-portal/:path*"
     },
     {
       "source": "/about",

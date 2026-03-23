@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artist Operations Portal | Marin Music Group</title>
+  <meta
+    name="description"
+    content="Internal artist operations portal for Marin Music Group partners."
+  >
+  <link rel="icon" type="image/png" href="/Assets/Images/MMG-Logo-Final.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+  <style>
+    :root {
+      --background: #0c0c0d;
+      --background-deep: #0c0c0d;
+      --surface: #121214;
+      --surface-alt: #17171a;
+      --text: #ffffff;
+      --muted: rgba(255, 255, 255, 0.72);
+      --line: rgba(255, 255, 255, 0.08);
+      --line-strong: rgba(255, 95, 31, 0.45);
+      --accent: #ff5f1f;
+      --glow: #b6f3ff;
+      --accent-soft: rgba(255, 95, 31, 0.12);
+      --accent-glow: rgba(255, 95, 31, 0.28);
+      --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.26);
+      --shadow-hover: 0 24px 48px rgba(0, 0, 0, 0.34);
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --container: 1100px;
+      --transition: 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--background);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--background-deep);
+      color: var(--text);
+      font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .page-shell {
+      width: min(calc(100% - 2rem), var(--container));
+      margin: 0 auto;
+    }
+
+    .portal-page {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+    }
+
+    .portal-page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(255, 95, 31, 0.05), rgba(255, 95, 31, 0)) top center / 100% 1px no-repeat,
+        radial-gradient(circle at 50% 0%, rgba(182, 243, 255, 0.07), transparent 28%),
+        radial-gradient(circle at 50% 100%, rgba(255, 95, 31, 0.04), transparent 30%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .portal-header {
+      padding: clamp(4.5rem, 9vw, 7.5rem) 0 clamp(2rem, 5vw, 3.25rem);
+      text-align: center;
+    }
+
+    .portal-kicker {
+      margin: 0 0 0.85rem;
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .portal-title {
+      margin: 0;
+      font-family: "Anton", Impact, sans-serif;
+      font-size: clamp(3rem, 9vw, 6rem);
+      line-height: 0.94;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow: 0 0 10px rgba(182, 243, 255, 0.62), 0 0 22px rgba(182, 243, 255, 0.28);
+    }
+
+    .portal-subtitle {
+      margin: 1rem 0 0;
+      font-size: clamp(1rem, 2.4vw, 1.35rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .portal-meta {
+      margin: 0.7rem 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .portal-divider {
+      width: min(100%, 780px);
+      height: 1px;
+      margin: 1.8rem auto 0;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.08) 18%,
+        rgba(255, 95, 31, 0.75) 50%,
+        rgba(255, 255, 255, 0.08) 82%,
+        transparent 100%
+      );
+      transform-origin: center;
+    }
+
+    .portal-main {
+      padding: clamp(1rem, 2vw, 1.5rem) 0 clamp(4rem, 8vw, 6rem);
+    }
+
+    .portal-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.25rem;
+      align-items: stretch;
+    }
+
+    .portal-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 320px;
+      padding: 1.5rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: linear-gradient(180deg, rgba(18, 18, 20, 0.98), rgba(23, 23, 26, 0.98));
+      box-shadow: var(--shadow-soft);
+      transition:
+        transform var(--transition),
+        box-shadow var(--transition),
+        border-color var(--transition),
+        background-color var(--transition);
+      cursor: pointer;
+    }
+
+    .portal-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px solid transparent;
+      background: linear-gradient(180deg, rgba(255, 95, 31, 0.28), rgba(255, 95, 31, 0)) border-box;
+      mask:
+        linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity var(--transition);
+      pointer-events: none;
+    }
+
+    .portal-card:hover,
+    .portal-card:focus-within {
+      transform: translateY(-6px);
+      border-color: rgba(255, 95, 31, 0.32);
+      box-shadow:
+        var(--shadow-hover),
+        0 0 0 1px rgba(255, 95, 31, 0.12),
+        0 0 24px var(--accent-glow);
+    }
+
+    .portal-card:hover::before,
+    .portal-card:focus-within::before {
+      opacity: 1;
+    }
+
+    .card-index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.4rem;
+      height: 2.4rem;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-sm);
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      background: rgba(255, 95, 31, 0.08);
+    }
+
+    .card-copy {
+      margin-top: 3.25rem;
+    }
+
+    .card-title {
+      margin: 0;
+      font-family: "Anton", Impact, sans-serif;
+      font-size: clamp(1.7rem, 3vw, 2.25rem);
+      line-height: 1;
+      letter-spacing: 0.015em;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+
+    .card-text {
+      margin: 0.9rem 0 0;
+      max-width: 28ch;
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.55;
+    }
+
+    .card-footer {
+      margin-top: 2rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .portal-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.9rem;
+      padding: 0.8rem 1.2rem;
+      border: 1.5px solid var(--accent);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--accent);
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      transition:
+        background-color var(--transition),
+        color var(--transition),
+        border-color var(--transition),
+        box-shadow var(--transition),
+        transform var(--transition);
+    }
+
+    .portal-button:hover,
+    .portal-button:focus-visible {
+      background: var(--accent);
+      color: #0c0c0d;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-soft);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .portal-footer {
+      padding: 0 0 2rem;
+      text-align: center;
+    }
+
+    .portal-footer p {
+      margin: 0;
+      color: var(--accent);
+      font-size: 0.84rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .portal-footer a {
+      transition: opacity var(--transition), text-shadow var(--transition);
+    }
+
+    .portal-footer a:hover,
+    .portal-footer a:focus-visible {
+      opacity: 0.9;
+      text-shadow: 0 0 18px rgba(255, 95, 31, 0.3);
+      outline: none;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition:
+        opacity 650ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 {
+      transition-delay: 90ms;
+    }
+
+    .delay-2 {
+      transition-delay: 180ms;
+    }
+
+    .delay-3 {
+      transition-delay: 270ms;
+    }
+
+    .divider-animate {
+      animation: lineGrow 900ms cubic-bezier(0.22, 1, 0.36, 1) 180ms both;
+    }
+
+    @keyframes lineGrow {
+      from {
+        transform: scaleX(0.1);
+        opacity: 0;
+      }
+
+      to {
+        transform: scaleX(1);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 920px) {
+      .portal-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .portal-card {
+        min-height: auto;
+      }
+
+      .card-copy {
+        margin-top: 2.2rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page-shell {
+        width: min(calc(100% - 1.25rem), var(--container));
+      }
+
+      .portal-header {
+        padding-top: 3.5rem;
+      }
+
+      .portal-card {
+        padding: 1.25rem;
+      }
+
+      .card-title {
+        font-size: 1.9rem;
+      }
+
+      .card-text {
+        max-width: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
+      }
+
+      .reveal,
+      .reveal.is-visible {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="portal-page">
+    <header class="portal-header page-shell reveal is-visible">
+      <p class="portal-kicker">Exclusive Licensing Assest Collection</p>
+      <h1 class="portal-title">Marin Music Group</h1>
+      <p class="portal-subtitle">Artist Operations Portal</p>
+      <p class="portal-meta">Internal portal for Marin Music Group partners</p>
+      <div class="portal-divider divider-animate" aria-hidden="true"></div>
+    </header>
+
+    <main class="portal-main page-shell">
+      <section class="portal-grid" aria-label="Artist operations portals">
+        <article class="portal-card reveal delay-1">
+          <div>
+            <span class="card-index" aria-hidden="true">01</span>
+            <div class="card-copy">
+              <h2 class="card-title">Release Delivery Portal</h2>
+              <p class="card-text">Submit masters, artwork, and release metadata</p>
+            </div>
+          </div>
+          <div class="card-footer">
+            <a class="portal-button" href="https://forms.gle/haynZjQZefsGZMNm7">Enter Portal</a>
+          </div>
+        </article>
+
+        <article class="portal-card reveal delay-2">
+          <div>
+            <span class="card-index" aria-hidden="true">02</span>
+            <div class="card-copy">
+              <h2 class="card-title">Marketing Asset Portal</h2>
+              <p class="card-text">Upload press photos, videos, and promotional materials</p>
+            </div>
+          </div>
+          <div class="card-footer">
+            <a class="portal-button" href="/marketing-asset-portal">Enter Portal</a>
+          </div>
+        </article>
+
+        <article class="portal-card reveal delay-3">
+          <div>
+            <span class="card-index" aria-hidden="true">03</span>
+            <div class="card-copy">
+              <h2 class="card-title">Platform Access</h2>
+              <p class="card-text">Grant Spotify, Meta and YouTube permissions</p>
+            </div>
+          </div>
+          <div class="card-footer">
+            <a class="portal-button" href="/platform-access">Enter Portal</a>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="portal-footer page-shell reveal delay-3">
+      <p><a href="https://marinmusicgroup.com">marinmusicgroup.com</a></p>
+    </footer>
+  </div>
+
+  <script>
+    const revealItems = document.querySelectorAll(".reveal:not(.is-visible)");
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+
+      revealItems.forEach((item) => observer.observe(item));
+    } else {
+      revealItems.forEach((item) => item.classList.add("is-visible"));
+    }
+
+    const portalCards = document.querySelectorAll(".portal-card");
+
+    portalCards.forEach((card) => {
+      card.addEventListener("click", (event) => {
+        if (event.target.closest("a")) {
+          return;
+        }
+
+        const link = card.querySelector("a");
+        if (link) {
+          link.click();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
