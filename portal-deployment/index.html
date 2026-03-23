@@ -8,7 +8,7 @@
     name="description"
     content="Internal artist operations portal for Marin Music Group partners."
   >
-  <link rel="icon" type="image/png" href="Assets/Images/MMG-Logo-Final.png">
+  <link rel="icon" type="image/png" href="https://www.marinmusicgroup.com/Assets/Images/MMG-Logo-Final.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -26,9 +26,8 @@
       --line: rgba(255, 255, 255, 0.08);
       --line-strong: rgba(255, 95, 31, 0.45);
       --accent: #ff5f1f;
-      --glow: #b6f3ff;
-      --accent-soft: rgba(255, 95, 31, 0.12);
       --accent-glow: rgba(255, 95, 31, 0.28);
+      --accent-soft: rgba(255, 95, 31, 0.12);
       --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.26);
       --shadow-hover: 0 24px 48px rgba(0, 0, 0, 0.34);
       --radius-sm: 6px;
@@ -89,7 +88,6 @@
       z-index: -1;
     }
 
-    /* Header block */
     .portal-header {
       padding: clamp(4.5rem, 9vw, 7.5rem) 0 clamp(2rem, 5vw, 3.25rem);
       text-align: center;
@@ -143,7 +141,6 @@
       transform-origin: center;
     }
 
-    /* Portal cards */
     .portal-main {
       padding: clamp(1rem, 2vw, 1.5rem) 0 clamp(4rem, 8vw, 6rem);
     }
@@ -164,8 +161,7 @@
       padding: 1.5rem;
       border: 1px solid var(--line);
       border-radius: var(--radius-md);
-      background:
-        linear-gradient(180deg, rgba(18, 18, 20, 0.98), rgba(23, 23, 26, 0.98));
+      background: linear-gradient(180deg, rgba(18, 18, 20, 0.98), rgba(23, 23, 26, 0.98));
       box-shadow: var(--shadow-soft);
       transition:
         transform var(--transition),
@@ -282,7 +278,6 @@
       outline: none;
     }
 
-    /* Footer */
     .portal-footer {
       padding: 0 0 2rem;
       text-align: center;
@@ -307,7 +302,6 @@
       outline: none;
     }
 
-    /* Load-in states */
     .reveal {
       opacity: 0;
       transform: translateY(18px);
@@ -349,7 +343,6 @@
       }
     }
 
-    /* Responsive */
     @media (max-width: 920px) {
       .portal-grid {
         grid-template-columns: 1fr;
@@ -419,7 +412,6 @@
 
     <main class="portal-main page-shell">
       <section class="portal-grid" aria-label="Artist operations portals">
-        <!-- Release delivery portal card -->
         <article class="portal-card reveal delay-1">
           <div>
             <span class="card-index" aria-hidden="true">01</span>
@@ -433,7 +425,6 @@
           </div>
         </article>
 
-        <!-- Marketing asset portal card -->
         <article class="portal-card reveal delay-2">
           <div>
             <span class="card-index" aria-hidden="true">02</span>
@@ -447,7 +438,6 @@
           </div>
         </article>
 
-        <!-- Platform access portal card -->
         <article class="portal-card reveal delay-3">
           <div>
             <span class="card-index" aria-hidden="true">03</span>
@@ -464,7 +454,7 @@
     </main>
 
     <footer class="portal-footer page-shell reveal delay-3">
-      <p><a href="https://marinmusicgroup.com">marinmusicgroup.com</a></p>
+      <p><a href="https://www.marinmusicgroup.com">marinmusicgroup.com</a></p>
     </footer>
   </div>
 

@@ -18,26 +18,6 @@
   ],
   "rewrites": [
     {
-      "source": "/",
-      "has": [
-        {
-          "type": "host",
-          "value": "portal.marinmusicgroup.com"
-        }
-      ],
-      "destination": "/artist-operations-portal"
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "portal.marinmusicgroup.com"
-        }
-      ],
-      "destination": "/artist-operations-portal/:path*"
-    },
-    {
       "source": "/about",
       "destination": "/about.html"
     },
