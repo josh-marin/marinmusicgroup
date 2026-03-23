@@ -691,6 +691,11 @@ body {
     font-size: clamp(0.95rem, 2.6vw, 1.1rem);
   }
 
+  .about-copy-emphasis {
+    text-decoration-skip-ink: none;
+    text-underline-offset: 0.28em;
+  }
+
   .about-text .glow-title {
     white-space: normal;
     font-size: clamp(1.8rem, 7.3vw, 3rem);
