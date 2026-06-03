@@ -95,7 +95,16 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.75rem;
+      margin-top: 0.95rem;
       margin-bottom: 1.6rem;
+    }
+
+    .service-helper {
+      margin: 0.2rem 0 0;
+      color: #ffffff;
+      font-size: 0.9rem;
+      line-height: 1.35;
+      opacity: 0.78;
     }
 
     .option {
@@ -334,44 +343,30 @@
 
         <form id="partnerForm" class="partner-form" action="https://formspree.io/f/xqedrgvr" method="post">
           <input type="hidden" name="_cc" value="josh@marinmusicgroup.com">
-          <p class="section-title">Partnership Type</p>
-          <div class="inquiry-options" role="radiogroup" aria-label="Partnership Type">
-            <label class="option">
-              <input id="inquiryPaidGrowth" type="radio" name="inquiryType" value="paid-growth" required>
-              Paid Growth
-            </label>
-            <label class="option">
-              <input id="inquiryLicensing" type="radio" name="inquiryType" value="licensing" required>
-              Exclusive Licensing
-            </label>
-          </div>
+          <input type="hidden" name="inquiryType" value="general-submission">
 
-          <div id="partnershipCopyRow" class="row conditional-field">
+          <div class="row">
             <div>
-              <p id="partnershipCopy" class="helper">
-                For artists building structured, long-term audience acquisition systems.
-              </p>
-            </div>
-          </div>
-
-          <div id="budgetRow" class="row conditional-field">
-            <div>
-              <label for="budget">Monthly Growth Investment Capacity (AUD)</label>
-              <select id="budget" name="budget">
-                <option value="" selected disabled>Select budget range</option>
-                <option value="under-1500">Under $1,500</option>
-                <option value="1500-2500">$1,500 – $2,500</option>
-                <option value="2500-5000">$2,500 – $5,000</option>
-                <option value="5000-plus">$5,000+</option>
-              </select>
-            </div>
-          </div>
-
-          <div id="demoRow" class="row conditional-field">
-            <div>
-              <label for="demoSubmission">Demo Submission</label>
-              <p class="helper">Submit your strongest commercially viable record via SoundCloud or Google Drive.</p>
-              <input id="demoSubmission" name="demoSubmission" type="url" placeholder="https://">
+              <label>What are you interested in?</label>
+              <p class="service-helper">Select all that apply.</p>
+              <div class="inquiry-options" role="group" aria-label="Services Interested In">
+                <label class="option">
+                  <input type="checkbox" name="servicesInterested" value="advertising">
+                  Advertising
+                </label>
+                <label class="option">
+                  <input type="checkbox" name="servicesInterested" value="creative">
+                  Creative
+                </label>
+                <label class="option">
+                  <input type="checkbox" name="servicesInterested" value="release-strategy">
+                  Release Strategy
+                </label>
+                <label class="option">
+                  <input type="checkbox" name="servicesInterested" value="catalog-growth">
+                  Catalog Growth
+                </label>
+              </div>
             </div>
           </div>
 
@@ -433,54 +428,7 @@
   <script>
     const partnerForm = document.querySelector('#partnerForm');
     const partnerFormSuccess = document.querySelector('#partnerFormSuccess');
-    const inquiryPaidGrowth = document.querySelector('#inquiryPaidGrowth');
-    const inquiryLicensing = document.querySelector('#inquiryLicensing');
-    const partnershipCopyRow = document.querySelector('#partnershipCopyRow');
-    const partnershipCopy = document.querySelector('#partnershipCopy');
-    const budgetRow = document.querySelector('#budgetRow');
-    const budgetField = document.querySelector('#budget');
-    const demoRow = document.querySelector('#demoRow');
-    const demoSubmissionField = document.querySelector('#demoSubmission');
-
-    const updateInquiryFields = () => {
-      if (!inquiryPaidGrowth || !inquiryLicensing || !partnershipCopyRow || !partnershipCopy || !budgetRow || !budgetField || !demoRow || !demoSubmissionField) {
-        return;
-      }
-
-      if (inquiryPaidGrowth.checked) {
-        partnershipCopyRow.classList.add('is-visible');
-        budgetRow.classList.add('is-visible');
-        demoRow.classList.remove('is-visible');
-        budgetField.required = true;
-        demoSubmissionField.required = false;
-        demoSubmissionField.value = '';
-        partnershipCopy.textContent = 'For artists building structured, long-term audience acquisition systems.';
-      } else if (inquiryLicensing.checked) {
-        partnershipCopyRow.classList.add('is-visible');
-        demoRow.classList.add('is-visible');
-        budgetRow.classList.remove('is-visible');
-        demoSubmissionField.required = true;
-        budgetField.required = false;
-        budgetField.selectedIndex = 0;
-        partnershipCopy.textContent = 'For artists demonstrating measurable traction and seeking to scale through structured capital partnerships, ranging from shared investment to fully deployed capital depending on trajectory.';
-      } else {
-        partnershipCopyRow.classList.remove('is-visible');
-        budgetRow.classList.remove('is-visible');
-        demoRow.classList.remove('is-visible');
-        budgetField.required = false;
-        demoSubmissionField.required = false;
-      }
-    };
-
     if (partnerForm && partnerFormSuccess) {
-      if (inquiryPaidGrowth) {
-        inquiryPaidGrowth.addEventListener('change', updateInquiryFields);
-      }
-      if (inquiryLicensing) {
-        inquiryLicensing.addEventListener('change', updateInquiryFields);
-      }
-      updateInquiryFields();
-
       partnerForm.addEventListener('submit', async (event) => {
         event.preventDefault();
 
@@ -504,7 +452,6 @@
             partnerForm.classList.add('is-hidden');
             partnerFormSuccess.classList.add('is-visible');
             partnerForm.reset();
-            updateInquiryFields();
           } else {
             alert('Submission failed. Please try again.');
           }
