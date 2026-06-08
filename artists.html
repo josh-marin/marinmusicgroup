@@ -153,8 +153,9 @@
       }
     ];
 
-    function ArtistTile({ artist }) {
+    function ArtistTile({ artist, suppressClickRef }) {
       const openArtist = () => {
+        if (suppressClickRef?.current) return;
         if (!artist.spotifyUrl || artist.spotifyUrl.endsWith("/...")) return;
         window.open(artist.spotifyUrl, "_blank", "noopener,noreferrer");
       };
@@ -163,15 +164,16 @@
         <button
           type="button"
           onClick={openArtist}
-          className="group w-full text-left outline-none transition duration-200 active:scale-95"
+          className="group w-[72vw] max-w-[320px] shrink-0 snap-start text-left outline-none transition duration-200 active:scale-[0.99] sm:w-[42vw] lg:w-[320px]"
           aria-label={`Open ${artist.name} on Spotify`}
         >
-          <div className="grid aspect-square place-items-center overflow-hidden border border-white/10 bg-[#151515] transition duration-200 group-hover:scale-[1.02] group-hover:border-[#ff5f1f]/70 group-hover:bg-[#1b1b1b] group-focus-visible:ring-2 group-focus-visible:ring-[#ff5f1f] group-focus-visible:ring-offset-4 group-focus-visible:ring-offset-[#0c0c0d]">
+          <div className="grid aspect-square place-items-center overflow-hidden border border-white/10 bg-[#151515] transition duration-200 group-hover:border-[#ff5f1f] group-hover:bg-[#1b1b1b] group-hover:shadow-[inset_0_0_0_1px_rgba(255,95,31,0.75)] group-focus-visible:ring-2 group-focus-visible:ring-[#ff5f1f] group-focus-visible:ring-offset-4 group-focus-visible:ring-offset-[#0c0c0d]">
             {artist.image ? (
               <img
                 src={artist.image}
                 alt={`${artist.name} artist image`}
                 loading="lazy"
+                draggable="false"
                 className="h-full w-full object-cover"
                 style={{ objectPosition: artist.imagePosition || "center center" }}
               />
@@ -187,6 +189,69 @@
     }
 
     function ArtistRosterPage() {
+      const scrollRef = React.useRef(null);
+      const dragRef = React.useRef({
+        active: false,
+        moved: false,
+        pointerId: null,
+        scrollLeft: 0,
+        startX: 0
+      });
+      const suppressClickRef = React.useRef(false);
+
+      const handleKeyDown = (event) => {
+        if (!scrollRef.current) return;
+
+        if (event.key === "ArrowRight") {
+          event.preventDefault();
+          scrollRef.current.scrollBy({ left: 340, behavior: "smooth" });
+        }
+
+        if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          scrollRef.current.scrollBy({ left: -340, behavior: "smooth" });
+        }
+      };
+
+      const handlePointerDown = (event) => {
+        if (!scrollRef.current || event.button !== 0) return;
+
+        dragRef.current = {
+          active: true,
+          moved: false,
+          pointerId: event.pointerId,
+          scrollLeft: scrollRef.current.scrollLeft,
+          startX: event.clientX
+        };
+
+        scrollRef.current.setPointerCapture?.(event.pointerId);
+      };
+
+      const handlePointerMove = (event) => {
+        if (!scrollRef.current || !dragRef.current.active) return;
+
+        const deltaX = event.clientX - dragRef.current.startX;
+
+        if (Math.abs(deltaX) > 4) {
+          dragRef.current.moved = true;
+          suppressClickRef.current = true;
+          event.preventDefault();
+        }
+
+        scrollRef.current.scrollLeft = dragRef.current.scrollLeft - deltaX;
+      };
+
+      const endDrag = (event) => {
+        if (!scrollRef.current || !dragRef.current.active) return;
+
+        scrollRef.current.releasePointerCapture?.(dragRef.current.pointerId || event.pointerId);
+        dragRef.current.active = false;
+
+        window.setTimeout(() => {
+          suppressClickRef.current = false;
+        }, 160);
+      };
+
       return (
         <main className="min-h-[calc(100vh-220px)] bg-[#0c0c0d] px-4 py-6 text-white sm:px-8 sm:py-10">
           <section className="mx-auto max-w-[1040px]">
@@ -195,12 +260,26 @@
                 <h1 className="glow-title font-display text-5xl leading-none tracking-normal text-white sm:text-7xl">
                   ARTISTS
                 </h1>
+                <p className="mt-4 max-w-[760px] text-[clamp(0.95rem,1.3vw,1.14rem)] font-normal leading-snug text-white">
+                  Scroll to view. Click on an artist to stream
+                </p>
               </div>
             </header>
 
-            <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-3">
+            <div
+              ref={scrollRef}
+              tabIndex="0"
+              onKeyDown={handleKeyDown}
+              onPointerCancel={endDrag}
+              onPointerDown={handlePointerDown}
+              onPointerLeave={endDrag}
+              onPointerMove={handlePointerMove}
+              onPointerUp={endDrag}
+              className="roster-scroll flex cursor-grab snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-6 pr-4 pt-1 outline-none active:cursor-grabbing sm:gap-5 sm:pr-8"
+              aria-label="Scrollable artist roster"
+            >
               {artists.map((artist) => (
-                <ArtistTile key={artist.id} artist={artist} />
+                <ArtistTile key={artist.id} artist={artist} suppressClickRef={suppressClickRef} />
               ))}
             </div>
           </section>
