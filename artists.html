@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roster | Marin Music Group</title>
+  <meta name="description" content="Marin Music Group artist roster">
+  <link rel="icon" type="image/png" href="Assets/Images/MMG-Logo-Final.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="script.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Montserrat", "sans-serif"],
+            display: ["Anton", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .roster-scroll {
+      scrollbar-width: thin;
+      scrollbar-color: #ff5f1f transparent;
+    }
+
+    .roster-scroll::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .roster-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .roster-scroll::-webkit-scrollbar-thumb {
+      background: #ff5f1f;
+      border-radius: 999px;
+    }
+
+    .glow-title {
+      text-shadow: 0 0 10px rgba(182, 243, 255, 0.62), 0 0 22px rgba(182, 243, 255, 0.28);
+    }
+  </style>
+</head>
+<body class="bg-[#0c0c0d] text-white antialiased">
+  <header class="site-header">
+    <div class="shell nav-row">
+      <a class="brand" href="/">
+        <img src="Assets/Images/MMG-Logo-Final.png" alt="Marin Music Group">
+      </a>
+      <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav">
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="main-nav" class="mobile-nav bottom-nav" aria-label="Main navigation">
+        <a href="/artists" class="nav-item">ARTISTS</a>
+        <a href="/about" class="nav-item">ABOUT</a>
+        <a href="/partner-with-us" class="nav-item">PARTNER WITH US</a>
+      </nav>
+    </div>
+  </header>
+
+  <div id="root"></div>
+
+  <footer class="site-footer shell reveal">
+    <p class="copyright">© 2026 Marin Music Group</p>
+
+    <nav class="socials" aria-label="Social links">
+      <a href="https://www.instagram.com/marinmusicgroup" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4z"></path>
+          <path d="M17.8 2.8H6.2A3.4 3.4 0 0 0 2.8 6.2v11.6a3.4 3.4 0 0 0 3.4 3.4h11.6a3.4 3.4 0 0 0 3.4-3.4V6.2a3.4 3.4 0 0 0-3.4-3.4zm1.6 15a1.6 1.6 0 0 1-1.6 1.6H6.2a1.6 1.6 0 0 1-1.6-1.6V6.2a1.6 1.6 0 0 1 1.6-1.6h11.6a1.6 1.6 0 0 1 1.6 1.6v11.6z"></path>
+          <circle cx="17.5" cy="6.5" r="1.2"></circle>
+        </svg>
+      </a>
+    </nav>
+
+    <a class="email" href="mailto:josh@marinmusicgroup.com">josh@marinmusicgroup.com</a>
+  </footer>
+
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    // Update these image paths or Spotify URLs as roster assets change.
+    const artists = [
+      {
+        id: 1,
+        name: "TRE",
+        image: "Assets/Images/TRE-1.jpg",
+        imagePosition: "center bottom",
+        spotifyUrl: "https://open.spotify.com/artist/1ZRS6F36zdg8YJecOzksbt?si=Nu3Itl9wQySl8WvRpBcN5g"
+      },
+      {
+        id: 2,
+        name: "Themis",
+        image: "Assets/Images/THEMIS-1.jpeg",
+        spotifyUrl: "https://open.spotify.com/artist/5pLpxDPAMMysUBcJKBKigU?si=sGhQQ1MlRA2-Wd_AobQRng"
+      },
+      {
+        id: 3,
+        name: "Jwill",
+        image: "Assets/Images/Jwill-1.JPEG",
+        spotifyUrl: "https://open.spotify.com/artist/3kKc5KCyBUaCib23LTvMK9?si=6dPLxiJhStCesnfTQ1K0Nw"
+      },
+      {
+        id: 4,
+        name: "Matsang",
+        image: "Assets/Images/Matsang-1.png",
+        spotifyUrl: "https://open.spotify.com/artist/6azM6975OGejyThNPgssDM?si=2Bv8sC_1S5OCj2ALAd4znw"
+      },
+      {
+        id: 5,
+        name: "JU$",
+        image: "Assets/Images/JU$-1.jpg",
+        spotifyUrl: "https://open.spotify.com/artist/21MSzgW2oT0WOpdiFA1fqa?si=dKtsIUloQhSAR6GFQmMLog"
+      },
+      {
+        id: 6,
+        name: "Boomr",
+        image: "Assets/Images/BOOMR-1.jpg",
+        spotifyUrl: "https://open.spotify.com/artist/2ivOnONfRdKg3hXyRouZV5?si=KBR4tDhgRhGA-ndhzCyYpA"
+      }
+    ];
+
+    function ArtistTile({ artist }) {
+      const openArtist = () => {
+        if (!artist.spotifyUrl || artist.spotifyUrl.endsWith("/...")) return;
+        window.open(artist.spotifyUrl, "_blank", "noopener,noreferrer");
+      };
+
+      return (
+        <button
+          type="button"
+          onClick={openArtist}
+          className="group w-full text-left outline-none transition duration-200 active:scale-95"
+          aria-label={`Open ${artist.name} on Spotify`}
+        >
+          <div className="grid aspect-square place-items-center overflow-hidden border border-white/10 bg-[#151515] transition duration-200 group-hover:scale-[1.02] group-hover:border-[#ff5f1f]/70 group-hover:bg-[#1b1b1b] group-focus-visible:ring-2 group-focus-visible:ring-[#ff5f1f] group-focus-visible:ring-offset-4 group-focus-visible:ring-offset-[#0c0c0d]">
+            {artist.image ? (
+              <img
+                src={artist.image}
+                alt={`${artist.name} artist image`}
+                loading="lazy"
+                className="h-full w-full object-cover"
+                style={{ objectPosition: artist.imagePosition || "center center" }}
+              />
+            ) : (
+              <span className="text-sm font-medium text-white/45">Artist Image</span>
+            )}
+          </div>
+          <p className="mt-3 text-sm font-semibold leading-tight text-white transition group-hover:text-[#ff5f1f] sm:text-[15px]">
+            {artist.name}
+          </p>
+        </button>
+      );
+    }
+
+    function ArtistRosterPage() {
+      return (
+        <main className="min-h-[calc(100vh-220px)] bg-[#0c0c0d] px-4 py-6 text-white sm:px-8 sm:py-10">
+          <section className="mx-auto max-w-[1040px]">
+            <header className="mb-8 border-b border-white/10 pb-5 sm:mb-10">
+              <div>
+                <h1 className="glow-title font-display text-5xl leading-none tracking-normal text-white sm:text-7xl">
+                  ARTISTS
+                </h1>
+              </div>
+            </header>
+
+            <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-3">
+              {artists.map((artist) => (
+                <ArtistTile key={artist.id} artist={artist} />
+              ))}
+            </div>
+          </section>
+        </main>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<ArtistRosterPage />);
+  </script>
+</body>
+</html>

@@ -14,6 +14,11 @@
       "source": "/how-it-works.html",
       "destination": "/how-it-works",
       "permanent": true
+    },
+    {
+      "source": "/artists.html",
+      "destination": "/artists",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -28,6 +33,10 @@
     {
       "source": "/how-it-works",
       "destination": "/how-it-works.html"
+    },
+    {
+      "source": "/artists",
+      "destination": "/artists.html"
     }
   ]
 }
