@@ -59,6 +59,12 @@
     .mobile-nav .nav-item {
       font-weight: 800 !important;
     }
+
+    .roster-scroll.is-dragging {
+      scroll-behavior: auto;
+      scroll-snap-type: none;
+      user-select: none;
+    }
   </style>
 </head>
 <body class="bg-[#0c0c0d] text-white antialiased">
@@ -154,17 +160,20 @@
     ];
 
     function ArtistTile({ artist, suppressClickRef }) {
-      const openArtist = () => {
-        if (suppressClickRef?.current) return;
-        if (!artist.spotifyUrl || artist.spotifyUrl.endsWith("/...")) return;
-        window.open(artist.spotifyUrl, "_blank", "noopener,noreferrer");
+      const handleClick = (event) => {
+        if (suppressClickRef?.current) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
       };
 
       return (
-        <button
-          type="button"
-          onClick={openArtist}
-          className="group w-[72vw] max-w-[320px] shrink-0 snap-start text-left outline-none transition duration-200 active:scale-[0.99] sm:w-[42vw] lg:w-[320px]"
+        <a
+          href={artist.spotifyUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={handleClick}
+          className="group block w-[72vw] max-w-[320px] shrink-0 snap-start text-left no-underline outline-none transition duration-200 active:scale-[0.99] sm:w-[42vw] lg:w-[320px]"
           aria-label={`Open ${artist.name} on Spotify`}
         >
           <div className="grid aspect-square place-items-center overflow-hidden border border-white/10 bg-[#151515] transition duration-200 group-hover:border-[#ff5f1f] group-hover:bg-[#1b1b1b] group-hover:shadow-[inset_0_0_0_1px_rgba(255,95,31,0.75)] group-focus-visible:ring-2 group-focus-visible:ring-[#ff5f1f] group-focus-visible:ring-offset-4 group-focus-visible:ring-offset-[#0c0c0d]">
@@ -184,7 +193,7 @@
           <p className="mt-3 text-sm font-semibold leading-tight text-white transition group-hover:text-[#ff5f1f] sm:text-[15px]">
             {artist.name}
           </p>
-        </button>
+        </a>
       );
     }
 
@@ -214,7 +223,7 @@
       };
 
       const handlePointerDown = (event) => {
-        if (!scrollRef.current || event.button !== 0) return;
+        if (!scrollRef.current || event.button !== 0 || event.pointerType === "touch") return;
 
         dragRef.current = {
           active: true,
@@ -224,6 +233,7 @@
           startX: event.clientX
         };
 
+        scrollRef.current.classList.add("is-dragging");
         scrollRef.current.setPointerCapture?.(event.pointerId);
       };
 
@@ -245,6 +255,8 @@
         if (!scrollRef.current || !dragRef.current.active) return;
 
         scrollRef.current.releasePointerCapture?.(dragRef.current.pointerId || event.pointerId);
+        scrollRef.current.classList.remove("is-dragging");
+        suppressClickRef.current = dragRef.current.moved;
         dragRef.current.active = false;
 
         window.setTimeout(() => {
