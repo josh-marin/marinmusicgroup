@@ -60,12 +60,6 @@
       font-weight: 800 !important;
     }
 
-    .roster-scroll.is-dragging {
-      scroll-behavior: auto;
-      scroll-snap-type: none;
-      user-select: none;
-    }
-
     .roster-scroll button,
     .roster-scroll img {
       -webkit-user-drag: none;
@@ -136,7 +130,7 @@
       {
         id: 4,
         name: "Matsang",
-        image: "Assets/Images/Matsang-1.png",
+        image: "Assets/Images/Matsang-2.png",
         spotifyUrl: "https://open.spotify.com/artist/6azM6975OGejyThNPgssDM?si=2Bv8sC_1S5OCj2ALAd4znw"
       },
       {
@@ -165,14 +159,8 @@
       }
     ];
 
-    function ArtistTile({ artist, suppressClickRef }) {
+    function ArtistTile({ artist }) {
       const handleClick = (event) => {
-        if (suppressClickRef?.current) {
-          event.preventDefault();
-          event.stopPropagation();
-          return;
-        }
-
         if (!artist.spotifyUrl || artist.spotifyUrl.endsWith("/...")) return;
         window.open(artist.spotifyUrl, "_blank", "noopener,noreferrer");
       };
@@ -207,14 +195,28 @@
 
     function ArtistRosterPage() {
       const scrollRef = React.useRef(null);
-      const dragRef = React.useRef({
-        active: false,
-        moved: false,
-        pointerId: null,
-        scrollLeft: 0,
-        startX: 0
-      });
-      const suppressClickRef = React.useRef(false);
+
+      React.useEffect(() => {
+        const scroller = scrollRef.current;
+        if (!scroller) return undefined;
+
+        const handleWheel = (event) => {
+          const maxScrollLeft = scroller.scrollWidth - scroller.clientWidth;
+          if (maxScrollLeft <= 0) return;
+
+          const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+          if (!delta) return;
+
+          event.preventDefault();
+          scroller.scrollLeft = Math.max(0, Math.min(maxScrollLeft, scroller.scrollLeft + delta));
+        };
+
+        scroller.addEventListener("wheel", handleWheel, { passive: false });
+
+        return () => {
+          scroller.removeEventListener("wheel", handleWheel);
+        };
+      }, []);
 
       const handleKeyDown = (event) => {
         if (!scrollRef.current) return;
@@ -228,48 +230,6 @@
           event.preventDefault();
           scrollRef.current.scrollBy({ left: -340, behavior: "smooth" });
         }
-      };
-
-      const handlePointerDown = (event) => {
-        if (!scrollRef.current || event.button !== 0 || event.pointerType === "touch") return;
-
-        dragRef.current = {
-          active: true,
-          moved: false,
-          pointerId: event.pointerId,
-          scrollLeft: scrollRef.current.scrollLeft,
-          startX: event.clientX
-        };
-
-        scrollRef.current.classList.add("is-dragging");
-        scrollRef.current.setPointerCapture?.(event.pointerId);
-      };
-
-      const handlePointerMove = (event) => {
-        if (!scrollRef.current || !dragRef.current.active) return;
-
-        const deltaX = event.clientX - dragRef.current.startX;
-
-        if (Math.abs(deltaX) > 4) {
-          dragRef.current.moved = true;
-          suppressClickRef.current = true;
-          event.preventDefault();
-        }
-
-        scrollRef.current.scrollLeft = dragRef.current.scrollLeft - deltaX;
-      };
-
-      const endDrag = (event) => {
-        if (!scrollRef.current || !dragRef.current.active) return;
-
-        scrollRef.current.releasePointerCapture?.(dragRef.current.pointerId || event.pointerId);
-        scrollRef.current.classList.remove("is-dragging");
-        suppressClickRef.current = dragRef.current.moved;
-        dragRef.current.active = false;
-
-        window.setTimeout(() => {
-          suppressClickRef.current = false;
-        }, 160);
       };
 
       return (
@@ -290,16 +250,16 @@
               ref={scrollRef}
               tabIndex="0"
               onKeyDown={handleKeyDown}
-              onPointerCancel={endDrag}
-              onPointerDown={handlePointerDown}
-              onPointerMove={handlePointerMove}
-              onPointerUp={endDrag}
-              className="roster-scroll flex cursor-grab snap-x snap-mandatory gap-4 overflow-x-auto pb-6 pr-4 pt-1 outline-none active:cursor-grabbing sm:gap-5 sm:pr-8"
+              className="roster-scroll flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-contain pb-6 pr-4 pt-1 outline-none sm:gap-5 sm:pr-8"
               aria-label="Scrollable artist roster"
             >
               {artists.map((artist) => (
-                <ArtistTile key={artist.id} artist={artist} suppressClickRef={suppressClickRef} />
+                <ArtistTile key={artist.id} artist={artist} />
               ))}
+            </div>
+
+            <div className="pointer-events-none -mt-5 flex justify-end pr-2 text-[#ff5f1f]" aria-hidden="true">
+              <span className="text-xl font-extrabold leading-none">→</span>
             </div>
           </section>
         </main>
