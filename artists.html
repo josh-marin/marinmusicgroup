@@ -39,21 +39,11 @@
     }
 
     .roster-scroll {
-      scrollbar-width: thin;
-      scrollbar-color: #ff5f1f transparent;
+      scrollbar-width: none;
     }
 
     .roster-scroll::-webkit-scrollbar {
-      height: 4.5px;
-    }
-
-    .roster-scroll::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    .roster-scroll::-webkit-scrollbar-thumb {
-      background: #ff5f1f;
-      border-radius: 999px;
+      display: none;
     }
 
     .glow-title {
@@ -200,6 +190,56 @@
 
     function ArtistRosterPage() {
       const scrollRef = React.useRef(null);
+      const barTrackRef = React.useRef(null);
+      const barDragRef = React.useRef({
+        active: false,
+        pointerId: null,
+        startScrollLeft: 0,
+        startX: 0,
+        thumbWidth: 0,
+        trackWidth: 0
+      });
+      const [thumbStyle, setThumbStyle] = React.useState({
+        opacity: 0,
+        transform: "translateX(0px)",
+        width: "0px"
+      });
+
+      const updateScrollBar = React.useCallback(() => {
+        const scroller = scrollRef.current;
+        const track = barTrackRef.current;
+        if (!scroller || !track) return;
+
+        const maxScrollLeft = scroller.scrollWidth - scroller.clientWidth;
+        if (maxScrollLeft <= 0) {
+          setThumbStyle({
+            opacity: 0,
+            transform: "translateX(0px)",
+            width: "0px"
+          });
+          return;
+        }
+
+        const trackWidth = track.clientWidth;
+        const normalThumbWidth = trackWidth * (scroller.clientWidth / scroller.scrollWidth);
+        const thumbWidth = Math.max(52, normalThumbWidth * 0.6);
+        const maxThumbLeft = Math.max(0, trackWidth - thumbWidth);
+        const thumbLeft = (scroller.scrollLeft / maxScrollLeft) * maxThumbLeft;
+
+        setThumbStyle((current) => {
+          const next = {
+            opacity: 1,
+            transform: `translateX(${thumbLeft}px)`,
+            width: `${thumbWidth}px`
+          };
+
+          return current.opacity === next.opacity &&
+            current.transform === next.transform &&
+            current.width === next.width
+            ? current
+            : next;
+        });
+      }, []);
 
       React.useEffect(() => {
         const scroller = scrollRef.current;
@@ -228,6 +268,7 @@
 
           virtualCurrent += distance * 0.14;
           scroller.scrollLeft = wrapScroll(virtualCurrent, maxScrollLeft);
+          updateScrollBar();
           animationFrame = window.requestAnimationFrame(animateScroll);
         };
 
@@ -254,14 +295,19 @@
         };
 
         scroller.addEventListener("wheel", handleWheel, { passive: false });
+        scroller.addEventListener("scroll", updateScrollBar, { passive: true });
+        window.addEventListener("resize", updateScrollBar);
+        window.requestAnimationFrame(updateScrollBar);
 
         return () => {
           if (animationFrame !== null) {
             window.cancelAnimationFrame(animationFrame);
           }
           scroller.removeEventListener("wheel", handleWheel);
+          scroller.removeEventListener("scroll", updateScrollBar);
+          window.removeEventListener("resize", updateScrollBar);
         };
-      }, []);
+      }, [updateScrollBar]);
 
       const handleKeyDown = (event) => {
         if (!scrollRef.current) return;
@@ -275,6 +321,51 @@
           event.preventDefault();
           scrollRef.current.scrollBy({ left: -340, behavior: "smooth" });
         }
+      };
+
+      React.useEffect(() => {
+        const handleMouseMove = (event) => {
+          const scroller = scrollRef.current;
+          if (!scroller || !barDragRef.current.active) return;
+
+          const maxScrollLeft = scroller.scrollWidth - scroller.clientWidth;
+          const maxThumbLeft = Math.max(1, barDragRef.current.trackWidth - barDragRef.current.thumbWidth);
+          const deltaX = event.clientX - barDragRef.current.startX;
+          const nextScrollLeft = barDragRef.current.startScrollLeft + (deltaX / maxThumbLeft) * maxScrollLeft;
+
+          event.preventDefault();
+          scroller.scrollLeft = Math.max(0, Math.min(maxScrollLeft, nextScrollLeft));
+          updateScrollBar();
+        };
+
+        const handleMouseUp = () => {
+          barDragRef.current.active = false;
+        };
+
+        window.addEventListener("mousemove", handleMouseMove);
+        window.addEventListener("mouseup", handleMouseUp);
+
+        return () => {
+          window.removeEventListener("mousemove", handleMouseMove);
+          window.removeEventListener("mouseup", handleMouseUp);
+        };
+      }, [updateScrollBar]);
+
+      const handleBarMouseDown = (event) => {
+        const scroller = scrollRef.current;
+        const track = barTrackRef.current;
+        if (!scroller || !track || event.button !== 0) return;
+
+        barDragRef.current = {
+          active: true,
+          pointerId: null,
+          startScrollLeft: scroller.scrollLeft,
+          startX: event.clientX,
+          thumbWidth: Number.parseFloat(thumbStyle.width) || 0,
+          trackWidth: track.clientWidth
+        };
+
+        event.preventDefault();
       };
 
       return (
@@ -301,6 +392,16 @@
               {artists.map((artist) => (
                 <ArtistTile key={artist.id} artist={artist} />
               ))}
+            </div>
+
+            <div ref={barTrackRef} className="-mt-5 h-5 pr-4 sm:pr-8" aria-hidden="true">
+              <div
+                className="roster-scroll-thumb flex h-5 cursor-grab items-start transition-opacity duration-200 active:cursor-grabbing"
+                style={thumbStyle}
+                onMouseDown={handleBarMouseDown}
+              >
+                <span className="block h-[5px] w-full rounded-full bg-[#ff5f1f]" />
+              </div>
             </div>
           </section>
         </main>
