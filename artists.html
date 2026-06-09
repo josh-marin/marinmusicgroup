@@ -130,7 +130,8 @@
       {
         id: 4,
         name: "Matsang",
-        image: "Assets/Images/Matsang-2.png",
+        image: "Assets/Images/Matsang-2.png?v=2",
+        imagePosition: "center 42%",
         spotifyUrl: "https://open.spotify.com/artist/6azM6975OGejyThNPgssDM?si=2Bv8sC_1S5OCj2ALAd4znw"
       },
       {
@@ -169,7 +170,7 @@
         <button
           type="button"
           onClick={handleClick}
-          className="group w-[72vw] max-w-[320px] shrink-0 snap-start text-left outline-none transition duration-200 active:scale-[0.99] sm:w-[42vw] lg:w-[320px]"
+          className="group w-[72vw] max-w-[320px] shrink-0 text-left outline-none transition duration-200 active:scale-[0.99] sm:w-[42vw] lg:w-[320px]"
           aria-label={`Open ${artist.name} on Spotify`}
         >
           <div className="grid aspect-square place-items-center overflow-hidden border border-white/10 bg-[#151515] transition duration-200 group-hover:border-[#ff5f1f] group-hover:bg-[#1b1b1b] group-hover:shadow-[inset_0_0_0_1px_rgba(255,95,31,0.75)] group-focus-visible:ring-2 group-focus-visible:ring-[#ff5f1f] group-focus-visible:ring-offset-4 group-focus-visible:ring-offset-[#0c0c0d]">
@@ -200,20 +201,60 @@
         const scroller = scrollRef.current;
         if (!scroller) return undefined;
 
+        let animationFrame = null;
+        let virtualCurrent = scroller.scrollLeft;
+        let virtualTarget = scroller.scrollLeft;
+
+        const wrapScroll = (value, maxScrollLeft) => {
+          if (maxScrollLeft <= 0) return 0;
+          const wrapped = value % maxScrollLeft;
+          return wrapped < 0 ? wrapped + maxScrollLeft : wrapped;
+        };
+
+        const animateScroll = () => {
+          const maxScrollLeft = scroller.scrollWidth - scroller.clientWidth;
+          const distance = virtualTarget - virtualCurrent;
+
+          if (Math.abs(distance) < 0.35) {
+            virtualCurrent = virtualTarget;
+            scroller.scrollLeft = wrapScroll(virtualCurrent, maxScrollLeft);
+            animationFrame = null;
+            return;
+          }
+
+          virtualCurrent += distance * 0.14;
+          scroller.scrollLeft = wrapScroll(virtualCurrent, maxScrollLeft);
+          animationFrame = window.requestAnimationFrame(animateScroll);
+        };
+
         const handleWheel = (event) => {
           const maxScrollLeft = scroller.scrollWidth - scroller.clientWidth;
           if (maxScrollLeft <= 0) return;
 
-          const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+          const modeScale = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? scroller.clientWidth : 1;
+          const delta = (Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY) * modeScale;
           if (!delta) return;
 
           event.preventDefault();
-          scroller.scrollLeft = Math.max(0, Math.min(maxScrollLeft, scroller.scrollLeft + delta));
+
+          if (animationFrame === null) {
+            virtualCurrent = scroller.scrollLeft;
+            virtualTarget = scroller.scrollLeft;
+          }
+
+          virtualTarget += delta * 0.45;
+
+          if (animationFrame === null) {
+            animationFrame = window.requestAnimationFrame(animateScroll);
+          }
         };
 
         scroller.addEventListener("wheel", handleWheel, { passive: false });
 
         return () => {
+          if (animationFrame !== null) {
+            window.cancelAnimationFrame(animationFrame);
+          }
           scroller.removeEventListener("wheel", handleWheel);
         };
       }, []);
@@ -250,16 +291,12 @@
               ref={scrollRef}
               tabIndex="0"
               onKeyDown={handleKeyDown}
-              className="roster-scroll flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-contain pb-6 pr-4 pt-1 outline-none sm:gap-5 sm:pr-8"
+              className="roster-scroll flex gap-4 overflow-x-auto overscroll-contain pb-6 pr-4 pt-1 outline-none sm:gap-5 sm:pr-8"
               aria-label="Scrollable artist roster"
             >
               {artists.map((artist) => (
                 <ArtistTile key={artist.id} artist={artist} />
               ))}
-            </div>
-
-            <div className="pointer-events-none -mt-5 flex justify-end pr-2 text-[#ff5f1f]" aria-hidden="true">
-              <span className="text-xl font-extrabold leading-none">→</span>
             </div>
           </section>
         </main>
